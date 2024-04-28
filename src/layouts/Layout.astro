@@ -1,0 +1,89 @@
+---
+import "@fontsource-variable/league-spartan";
+import PreHeader from "../components/Header/PreHeader.astro";
+import SearchBar from "../components/Header/SearchBar.astro";
+import HeaderElement from "../components/Header/HeaderElement.astro";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Astro description" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body>
+        <header>
+            <PreHeader />
+            <div class="flex flex-row items-center px-3 py-4 sm:px-16 sm:py-4 justify-between sm:gap-x-10 lg:gap-x-16">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    stroke="#232F3F"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="3"
+                    class="icon icon-tabler icon-tabler-menu-2 sm:hidden size-6 xs:size-8"
+                    viewBox="0 0 24 24">
+                    <path stroke="none" d="M0 0h24v24H0z"></path>
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg
+                    class="h-4 xs:h-6 lg:h-8 w-auto"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 209 28">
+                    <path
+                        fill="#232F3F"
+                        d="M12.52 27.92a10.42 10.42 0 0 1-4.24-1.16 15.72 15.72 0 0 1-6.93-7.61 14.8 14.8 0 0 1-.25-9 13.22 13.22 0 0 1 4.72-7.08C8.56.9 10.58.3 14.94.4c3.93.08 5.78.74 8.93 3.17l.9.7-2.13 2.14a52.47 52.47 0 0 1-2.2 2.14 5 5 0 0 1-.74-.52 8.69 8.69 0 0 0-3.15-1.77 5.1 5.1 0 0 0-1.99-.2 5.1 5.1 0 0 0-2 .2 8.52 8.52 0 0 0-3.55 2.2C6.81 10.67 6 13.42 6.75 16.2c.22.8.9 2.16 1.44 2.9a7.47 7.47 0 0 0 6.14 3.2c1.56 0 2.65-.33 4.82-1.44l1.42-.73 2.02 2.02 2.03 2.03-1.18.88c-1.94 1.46-3.12 2.07-4.75 2.47-1.45.35-4.36.54-6.17.4Zm19.73.04 1.26-2.9a780.3 780.3 0 0 1 10.54-23.2L44.9.12l.12.22c.35.66 3.83 8.34 7.05 15.55l5.36 12.01c.03.08-.6.1-3.1.08l-3.14-.02-1.11-2.47c-3.73-8.32-5.23-11.6-5.27-11.55a807.07 807.07 0 0 1-3.75 8.47l-2.45 5.5-.8.04c-.93.06-5.56.07-5.56.01Zm34.91-13.88V.15h4.14c4.28 0 5.85.07 7.3.28 1.77.26 3.1.8 4.21 1.73 1.9 1.57 3.08 3.5 3.59 5.87.22 1 .2 3.01-.04 4.07a9.57 9.57 0 0 1-4.97 6.67c-1.27.65-2.3.82-5.02.82-1.02 0-2.13.03-2.48.05l-.64.05V28h-6.09V14.08Zm10.4-.12a3.1 3.1 0 0 0 1.73-.85 3.86 3.86 0 0 0 1.36-2.92c0-1.24-.4-2.11-1.46-3.18-1.18-1.18-1.57-1.3-4.26-1.3h-1.68v8.33h1.9c1.06 0 2.14-.04 2.42-.08Zm28.69 13.52a346.8 346.8 0 0 1-5.76-10.62l-.96-1.88V13.2l1.83.01c2 .02 2.37-.03 3.18-.45.96-.48 1.63-1.62 1.8-3.04.16-1.31-.6-2.56-1.98-3.24a8 8 0 0 0-3.15-.73 34.6 34.6 0 0 1-1.5-.16l-.18-.04V2.78c0-1.53.03-2.78.06-2.78.53 0 4.25.34 4.76.43 4.44.75 7.34 3.52 8.02 7.65a13 13 0 0 1-.08 3.64c-.28 1.27-.8 2.55-1.46 3.51a9.93 9.93 0 0 1-2.06 2.2l-.98.84 2.73 4.38 3.04 4.87.3.48h-7.3l-.3-.52Zm16.94-13.4V.15h6.01V28h-6.01V14.08Zm26.92 13.84c-2.5-.18-4.46-1-6.63-2.75a16.15 16.15 0 0 1-4.49-5.92c-.6-1.55-.85-2.95-.85-4.88 0-3.07.8-5.8 2.4-8.23a14.96 14.96 0 0 1 5.7-4.83c1.57-.69 2.73-.88 5.35-.88 1.9 0 2.06.01 3.04.22 1.5.3 3.2.9 4.49 1.54a16.9 16.9 0 0 1 2.93 1.84l.29.25-2.14 2.15c-2.04 2.06-2.14 2.15-2.3 2.05-.1-.06-.55-.4-1-.75a8.72 8.72 0 0 0-2.8-1.48 9.03 9.03 0 0 0-3.07-.16 8.1 8.1 0 0 0-4.6 2.56 8.78 8.78 0 0 0-2.1 3.6c-.19.6-.2.78-.2 1.9 0 1.39.1 1.93.6 3.08a8.28 8.28 0 0 0 5.18 4.8c.62.2.79.21 1.99.22 1.13 0 1.4-.02 1.96-.18a15.3 15.3 0 0 0 3.11-1.32l1.22-.64 2 2c1.1 1.1 2 2.01 2 2.04 0 .06-1.69 1.34-2.4 1.82a11.56 11.56 0 0 1-5.31 1.87c-1.06.11-3.37.16-4.37.08Zm30.6 0c-2.02-.14-3.67-.7-5.33-1.8a16.1 16.1 0 0 1-5.41-6.05 11.6 11.6 0 0 1-1.22-5.23 14.4 14.4 0 0 1 1.46-7.05 12.64 12.64 0 0 1 3.52-4.48 11.15 11.15 0 0 1 5.48-2.7c1.07-.2 3.69-.28 4.75-.16 1.9.23 3.93.83 5.7 1.7 1.09.54 2.45 1.4 2.98 1.87l.29.26-2.14 2.18-2.13 2.18-.74-.59a8.57 8.57 0 0 0-3.28-1.82 9.47 9.47 0 0 0-3.61-.03 9.12 9.12 0 0 0-5.52 4.58 7.51 7.51 0 0 0 0 6.85 8.22 8.22 0 0 0 5 4.4c.61.2.78.21 1.98.22 1.89 0 2.54-.19 4.96-1.44l1.34-.7 2 2a62.03 62.03 0 0 1 1.99 2.05c0 .03-.57.49-1.28 1.01a11.85 11.85 0 0 1-6.43 2.67c-.95.11-3.37.16-4.37.08Zm21.78-13.84V.15h6.01V28h-6.01V14.08Z"
+                    ></path>
+                </svg>
+                <SearchBar classElement="hidden h-8 sm:flex flex-row grow" />
+                <div class="flex space-x-6 w-auto">
+                    <HeaderElement
+                        href="/"
+                        classElement="flex flex-col items-center"
+                        icon="user"
+                        iconClass="size-4 xs:size-6"
+                        text="Iniciar sesión"
+                        textClass="hidden lg:block"
+                    />
+                    <HeaderElement
+                        href="/"
+                        classElement="flex flex-col items-center"
+                        icon="heart"
+                        iconClass="size-4 xs:size-6"
+                        text="Favoritos"
+                        textClass="hidden lg:block"
+                    />
+                    <HeaderElement
+                        href="/"
+                        classElement="flex flex-col items-center"
+                        icon="cart"
+                        iconClass="size-4 xs:size-6"
+                        text="Carrito"
+                        textClass="hidden lg:block"
+                    />
+                </div>
+            </div>
+            <SearchBar classElement="flex h-8 sm:hidden flex-row grow mx-3" />
+        </header>
+
+        <slot />
+    </body>
+
+    <style is:global>
+        body {
+            font-family: "League Spartan Variable", sans-serif;
+        }
+    </style>
+</html>
