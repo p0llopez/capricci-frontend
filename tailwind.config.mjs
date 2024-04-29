@@ -6,6 +6,10 @@ export default {
         extend: {
             colors: {
                 bluegray: "#232F3F",
+                bluegreen: {
+                    70: "#71A9A9",
+                    DEFAULT: "#378888",
+                },
             },
             screens: {
                 xs: "380px",
