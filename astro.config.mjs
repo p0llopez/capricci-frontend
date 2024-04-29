@@ -5,10 +5,13 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), react()],
-  image: {
-    remotePatterns: [{
-      protocol: "https"
-    }]
-  }
+    integrations: [tailwind(), react()],
+    image: {
+        remotePatterns: [
+            {
+                protocol: "https",
+            },
+        ],
+    },
+    output: "server",
 });

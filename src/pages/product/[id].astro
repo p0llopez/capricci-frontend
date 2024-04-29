@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { getProduct } from "../../lib/products";
+
+const { id } = Astro.params;
+
+const product = await getProduct(id!);
+---
+
+<Layout title="Capricci">
+    <h1>{product.name}</h1>
+    <h2>{product.brand}</h2>
+    <p>{product.description}</p>
+    <p>{product.price}</p>
+    <Image src={product.image} inferSize alt={product.name} />
+</Layout>

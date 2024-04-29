@@ -1,18 +1,17 @@
 ---
 interface Props {
     classElement?: string;
-    href?: string;
     icon: string;
     iconClass?: string;
     text: string;
     textClass?: string;
 }
 
-const { classElement, href, icon, iconClass, text, textClass } = Astro.props;
+const { classElement, icon, iconClass, text, textClass } = Astro.props;
 const { default: svg } = await import(`/public/icons/${icon}.svg?raw`);
 ---
 
-<a class={classElement} href={href}>
+<button class={classElement}>
     <svg class={iconClass} set:html={svg} />
     <p class={textClass}>{text}</p>
-</a>
+</button>

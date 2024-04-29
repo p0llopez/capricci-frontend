@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
 interface Props {
+    id: string;
     brand: string;
-    description: string;
     image: any;
     name: string;
     presentation: number;
@@ -11,17 +11,19 @@ interface Props {
     stock: number;
 }
 
-const { brand, description, image, name, presentation, presentation_format, price, stock }: Props = Astro.props;
+const { id, brand, image, name, presentation, presentation_format, price, stock }: Props = Astro.props;
 ---
 
-<a class="rounded-lg hover:shadow-lg transition flex flex-col p-2">
-    <Image src={image} inferSize alt={name} class="mb-2 rounded" />
-    <div class="pl-3">
-        <p class="text-xs uppercase text-bluegreen font-semibold">{brand}</p>
-        <h2 class="text-lg capitalize font-semibold">{name}</h2>
-        <p>{presentation} {presentation_format}</p>
-        <p class="text-xl capitalize font-bold">{price} €</p>
-    </div>
+<div class="flex flex-col p-2 rounded-lg hover:shadow-lg transition">
+    <a href={`product/${id}`}>
+        <Image src={image} inferSize alt={name} class="mb-2 rounded" />
+        <div class="pl-3">
+            <p class="text-xs uppercase text-bluegreen font-semibold">{brand}</p>
+            <h2 class="text-lg capitalize font-semibold">{name}</h2>
+            <p>{presentation} {presentation_format}</p>
+            <p class="text-xl capitalize font-bold">{price} €</p>
+        </div>
+    </a>
     <button
         class="bg-bluegreen-70 text-white rounded-lg p-2 mt-2 flex flex-row items-center justify-center hover:bg-bluegreen transition">
         <svg
@@ -39,4 +41,4 @@ const { brand, description, image, name, presentation, presentation_format, pric
             <path d="m6 5 14 1-1 7H6"></path>
         </svg><span class="mt-1">Añadir</span></button
     >
-</a>
+</div>
