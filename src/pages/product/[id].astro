@@ -1,17 +1,43 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { Image } from "astro:assets";
-import { getProduct } from "../../lib/products";
+import { Image } from "astro:assets"
+import Layout from "../../layouts/Layout.astro"
+import { getProduct } from "../../lib/api"
 
-const { id } = Astro.params;
+const { id } = Astro.params
 
-const product = await getProduct(id!);
+const product = await getProduct(id!)
 ---
 
 <Layout title="Capricci">
-    <h1>{product.name}</h1>
-    <h2>{product.brand}</h2>
-    <p>{product.description}</p>
-    <p>{product.price}</p>
-    <Image src={product.image} inferSize alt={product.name} />
+	<div class="grid grid-cols-1 lg:grid-cols-3">
+		<Image src={product.image} inferSize alt={product.name} class="mr-10 rounded" />
+		<div class="">
+			<h1 class="text-5xl font-bold uppercase">{product.name}</h1>
+			<p class="text-2xl">{product.presentation} {product.presentation_format}</p>
+			<h2 class="text-3xl font-semibold capitalize">{product.brand}</h2>
+			<p>{product.description}</p>
+		</div>
+		<div class="flex flex-col rounded-xl border p-10">
+			<p class="text-7xl font-extrabold">{product.price} €</p>
+			<button
+				class="mt-2 flex flex-row items-center justify-center rounded-lg bg-bluegreen-70 p-2 text-white transition hover:bg-bluegreen"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					stroke="#fff"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					class="icon icon-tabler icon-tabler-shopping-cart mr-3 size-5"
+					viewBox="0 0 24 24"
+				>
+					<path stroke="none" d="M0 0h24v24H0z"></path>
+					<path d="M4 19a2 2 0 1 0 4 0 2 2 0 1 0-4 0m11 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0"></path>
+					<path d="M17 17H6V3H4"></path>
+					<path d="m6 5 14 1-1 7H6"></path>
+				</svg><span class="mt-1">Añadir</span></button
+			>
+		</div>
+	</div>
 </Layout>

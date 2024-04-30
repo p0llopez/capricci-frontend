@@ -1,27 +1,26 @@
 ---
-import HeaderElement from "./HeaderElement.astro";
+import HeaderElement from "./HeaderElement.astro"
+import UserIcon from "./icons/UserIcon.astro"
 ---
 
-<div class="flex space-x-6 w-auto">
-    <HeaderElement
-        classElement="flex flex-col items-center hover:scale-105 transition"
-        icon="user"
-        iconClass="size-4 xs:size-6"
-        text="Iniciar sesión"
-        textClass="hidden lg:block"
-    />
-    <HeaderElement
-        classElement="flex flex-col items-center hover:scale-105 transition"
-        icon="heart"
-        iconClass="size-4 xs:size-6"
-        text="Favoritos"
-        textClass="hidden lg:block"
-    />
-    <HeaderElement
-        classElement="flex flex-col items-center hover:scale-105 transition"
-        icon="cart"
-        iconClass="size-4 xs:size-6"
-        text="Carrito"
-        textClass="hidden lg:block"
-    />
+<div class="flex w-auto space-x-6">
+	<HeaderElement
+		classElement="flex flex-col items-center hover:scale-105 transition"
+		text="Iniciar sesión"
+		textClass="hidden lg:block"
+	><UserIcon slot="icon" class="size-4 xs:size-6"/></HeaderElement>
+	<HeaderElement
+		classElement="flex flex-col items-center hover:scale-105 transition"
+		icon="heart"
+		iconClass="size-4 xs:size-6"
+		text="Favoritos"
+		textClass="hidden lg:block"
+	/>
+	<HeaderElement
+		classElement="flex flex-col items-center hover:scale-105 transition"
+		icon="cart"
+		iconClass="size-4 xs:size-6"
+		text="Carrito"
+		textClass="hidden lg:block"
+	/>
 </div>
