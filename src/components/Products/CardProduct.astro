@@ -18,9 +18,9 @@ const { id, brand, image, name, presentation, presentation_format, price, stock 
 ---
 
 <div class="flex flex-col rounded-lg p-2 transition hover:shadow-lg">
-	<a href={`product/${id}`}>
+	<a href={`product/${id}`} class="flex-1">
 		<Image src={image} inferSize alt={name} class="mb-2 rounded" />
-		<div class="flex flex-1 flex-col pl-3">
+		<div class="pl-3">
 			<p class="text-xs font-semibold uppercase text-bluegreen">{brand}</p>
 			<h2 class="text-lg font-semibold capitalize">{name}</h2>
 			<p>{presentation} {presentation_format}</p>
