@@ -1,43 +1,59 @@
 ---
 import { Image } from "astro:assets"
-import Layout from "../../layouts/Layout.astro"
-import { getProduct } from "../../lib/api"
+import Stars from "@/components/Products/Stars.astro"
+
+import CartButton from "@/components/Products/CartButton.astro"
+import QuantityDropdown from "@/components/Products/QuantityDropdown"
+import Layout from "@/layouts/Layout.astro"
+import { getProduct, getReviewsFromProduct } from "@/lib/api"
 
 const { id } = Astro.params
 
 const product = await getProduct(id!)
+const reviews = await getReviewsFromProduct(id!)
 ---
 
-<Layout title="Capricci">
-	<div class="grid grid-cols-1 lg:grid-cols-3">
+<Layout title=`Capricci - ${product.name}`>
+	<div class="grid grid-cols-1 gap-4 px-2 pt-2 lg:grid-cols-[400px_1fr_1fr] lg:px-20 lg:pt-14">
 		<Image src={product.image} inferSize alt={product.name} class="mr-10 rounded" />
-		<div class="">
-			<h1 class="text-5xl font-bold uppercase">{product.name}</h1>
+		<div class="flex flex-col gap-3">
+			<h2 class="text-xl font-semibold uppercase text-bluegreen">{product.brand}</h2>
+			<h1 class="text-4xl font-semibold capitalize">{product.name}</h1>
 			<p class="text-2xl">{product.presentation} {product.presentation_format}</p>
-			<h2 class="text-3xl font-semibold capitalize">{product.brand}</h2>
+
+			<h3 class="text-lg font-semibold">Descripción</h3>
 			<p>{product.description}</p>
 		</div>
-		<div class="flex flex-col rounded-xl border p-10">
-			<p class="text-7xl font-extrabold">{product.price} €</p>
-			<button
-				class="mt-2 flex flex-row items-center justify-center rounded-lg bg-bluegreen-70 p-2 text-white transition hover:bg-bluegreen"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					stroke="#fff"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					class="icon icon-tabler icon-tabler-shopping-cart mr-3 size-5"
-					viewBox="0 0 24 24"
-				>
-					<path stroke="none" d="M0 0h24v24H0z"></path>
-					<path d="M4 19a2 2 0 1 0 4 0 2 2 0 1 0-4 0m11 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0"></path>
-					<path d="M17 17H6V3H4"></path>
-					<path d="m6 5 14 1-1 7H6"></path>
-				</svg><span class="mt-1">Añadir</span></button
-			>
+		<div class="flex flex-col justify-between rounded-xl bg-white p-6">
+			<div class="flex flex-col gap-2">
+				<p class="text-5xl font-semibold">{product.price} €</p>
+				<p class="text-xl text-bluegreen">DISPONIBLE</p>
+				<p class="text-semibold text-xl">
+					Recíbelo entre <span class="text-bluegreen">el XX y el XX de XXXX</span>
+				</p>
+				<a href="/" class="flex items-center py-4">
+					<Stars rating={product.rating} starsClass="size-5" />
+					<p class="ml-4 mt-2 text-lg text-bluegreen underline">
+						{product.rating} de 5 - {product.quantity_reviews} Reseñas
+					</p>
+				</a>
+			</div>
+
+			<div class="flex flex-col">
+				<QuantityDropdown options={[1, 2, 3, 4, 5]} defaultValue={1} client:load />
+				<CartButton />
+			</div>
 		</div>
+	</div>
+	<div class="flex flex-col gap-4 px-2 pt-2 lg:px-20 lg:pt-14">
+		RESEÑAS
+		{
+			reviews.map((review) => (
+				<div class="flex flex-col gap-2">
+					<Stars rating={review.rating} starsClass="size-5" />
+					<p>{review.comment}</p>
+				</div>
+			))
+		}
 	</div>
 </Layout>
