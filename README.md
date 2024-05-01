@@ -55,14 +55,10 @@ Feel free to check [our documentation](https://docs.astro.build) or jump into ou
 
 ## To Do's
 
--   Product List:
-    -   obtener desde endpoint
-    -   Paginazion
-    -   Vista unitaria
--   Product View
--   Login Pop up
--   Checkout
--   Cart
--   Reviews
--   Profile
--   Orders
+- UI:
+  - Reseñas
+  - Login
+  - Perfil
+- Funciones:
+  - Carrito
+  - Login
