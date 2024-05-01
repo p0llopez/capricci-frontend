@@ -1,6 +1,6 @@
 ---
-import { Image } from "astro:assets"
 import Stars from "@/components/Products/Stars.astro"
+import { Image } from "astro:assets"
 
 import CartButton from "@/components/Products/CartButton.astro"
 import QuantityDropdown from "@/components/Products/QuantityDropdown"
@@ -14,7 +14,7 @@ const reviews = await getReviewsFromProduct(id!)
 ---
 
 <Layout title=`Capricci - ${product.name}`>
-	<div class="grid grid-cols-1 gap-4 px-2 pt-2 lg:grid-cols-[400px_1fr_1fr] lg:px-20 lg:pt-14">
+	<div class="grid grid-cols-1 gap-4 pt-2 lg:grid-cols-[400px_1fr_1fr] lg:pt-14">
 		<Image src={product.image} inferSize alt={product.name} class="mr-10 rounded" />
 		<div class="flex flex-col gap-3">
 			<h2 class="text-xl font-semibold uppercase text-bluegreen">{product.brand}</h2>
