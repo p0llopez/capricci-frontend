@@ -1,0 +1,18 @@
+---
+import CartIcon from "@/icons/Cart.astro"
+
+interface Props {
+	class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<button
+	class:list={[
+		"mt-2 flex flex-row items-center justify-center rounded-lg bg-bluegreen-70 p-2 text-beige transition hover:bg-bluegreen",
+		className,
+	]}
+>
+	<CartIcon class="mr-3 size-5 stroke-beige" /><span class="mt-1">Añadir</span></button
+>

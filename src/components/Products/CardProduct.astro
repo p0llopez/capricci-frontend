@@ -1,6 +1,7 @@
 ---
-import CartIcon from "@/icons/Cart.astro"
 import { Image } from "astro:assets"
+import CartButton from "./CartButton.astro"
+import Stars from "./Stars.astro"
 
 interface Props {
 	id: string
@@ -9,11 +10,12 @@ interface Props {
 	name: string
 	presentation: number
 	presentation_format: string
-	price: string
+	price: number
 	stock: number
+	rating: number
 }
 
-const { id, brand, image, name, presentation, presentation_format, price, stock }: Props =
+const { id, brand, image, name, presentation, presentation_format, price, stock, rating }: Props =
 	Astro.props
 ---
 
@@ -24,13 +26,9 @@ const { id, brand, image, name, presentation, presentation_format, price, stock 
 			<p class="text-xs font-semibold uppercase text-bluegreen">{brand}</p>
 			<h2 class="text-lg font-semibold capitalize">{name}</h2>
 			<p>{presentation} {presentation_format}</p>
+			<Stars rating={rating} starsClass="size-3" />
 			<p class="text-xl font-bold capitalize">{price} €</p>
 		</div>
 	</a>
-	<button
-		class="mt-2 flex flex-row items-center justify-center rounded-lg bg-bluegreen-70 p-2 text-white transition hover:bg-bluegreen"
-	>
-		<CartIcon class="mr-3 size-5 stroke-white" />
-		<span class="mt-1">Añadir</span></button
-	>
+	<CartButton />
 </div>

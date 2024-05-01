@@ -10,6 +10,8 @@ export interface Product {
 	name: string
 	presentation: number
 	presentation_format: string
-	price: string
+	price: number
 	stock: number
+	rating: number
+	quantity_reviews: number
 }
