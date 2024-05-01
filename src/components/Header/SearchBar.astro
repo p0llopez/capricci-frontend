@@ -1,30 +1,16 @@
 ---
-interface Props {
-	classElement?: string
-}
+import SearchIcon from "@/icons/Search.astro"
 
-const { classElement } = Astro.props
+const { class: className } = Astro.props
 ---
 
-<div class:list={classElement}>
+<div class:list={className}>
 	<input
 		type="text"
 		placeholder="Buscar"
 		class="h-full w-full rounded-l-lg border-y border-l pl-3 hover:cursor-pointer focus:border-y-bluegray focus:border-l-bluegray focus:outline-none"
 	/>
 	<div class="flex h-auto w-12 items-center justify-center rounded-r-lg bg-bluegray">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			fill="none"
-			stroke="#fff"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			stroke-width="1.5"
-			class="icon icon-tabler icon-tabler-search size-6"
-			viewBox="0 0 24 24"
-		>
-			<path stroke="none" d="M0 0h24v24H0z"></path>
-			<path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0m18 11-6-6"></path>
-		</svg>
+		<SearchIcon />
 	</div>
 </div>
