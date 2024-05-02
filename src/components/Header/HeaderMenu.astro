@@ -1,7 +1,8 @@
 ---
-import CartIcon from "@/icons/Cart.astro"
 import HeartIcon from "@/icons/Heart.astro"
 import UserIcon from "@/icons/User.astro"
+import ShoppingCartHeaderButton from "../ShoppingCart/ShoppingCartHeaderButton"
+import ShoppingCartList from "../ShoppingCart/ShoppingCartList"
 ---
 
 <div class="flex w-auto space-x-6">
@@ -10,11 +11,11 @@ import UserIcon from "@/icons/User.astro"
 		<p class="hidden lg:block">Iniciar sesión</p>
 	</a>
 	<a class="flex flex-col items-center transition hover:scale-105" href="/">
-		<HeartIcon />
+		<HeartIcon class="size-4 xs:size-6" />
 		<p class="hidden lg:block">Favoritos</p>
 	</a>
-	<a class="flex flex-col items-center transition hover:scale-105" href="/">
-		<CartIcon class="size-4 stroke-bluegray xs:size-6" />
-		<p class="hidden lg:block">Carrito</p>
-	</a>
+	<div>
+		<ShoppingCartHeaderButton client:visible />
+		<ShoppingCartList client:load />
+	</div>
 </div>

@@ -8,11 +8,6 @@ interface Props {
 const { class: className } = Astro.props
 ---
 
-<button
-	class:list={[
-		"mt-2 flex flex-row items-center justify-center rounded-lg bg-bluegreen-70 p-2 text-beige transition hover:bg-bluegreen",
-		className,
-	]}
->
+<button class:list={["flex w-full flex-row items-center justify-center p-2 text-beige", className]}>
 	<CartIcon class="mr-3 size-5 stroke-beige" /><span class="mt-1">Añadir</span></button
 >

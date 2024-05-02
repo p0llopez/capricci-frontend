@@ -1,16 +1,19 @@
 ---
-import Stars from "@/components/Products/Stars.astro"
 import { Image } from "astro:assets"
+import Stars from "@/components/Products/Stars.astro"
 
 import CartButton from "@/components/Products/CartButton.astro"
-import QuantityDropdown from "@/components/Products/QuantityDropdown"
+import AddToShoppingCartWithQuantity from "@/components/ShoppingCart/AddToShoppingCartWithQuantity"
+import Heart from "@/icons/Heart.astro"
 import Layout from "@/layouts/Layout.astro"
 import { getProduct, getReviewsFromProduct } from "@/lib/api"
+import type { ShoppingCartItem } from "@/types/ShoppingCartItem"
 
 const { id } = Astro.params
 
 const product = await getProduct(id!)
 const reviews = await getReviewsFromProduct(id!)
+const item = { id, name: product.name, imageSrc: product.image, quantity: 1 } as ShoppingCartItem
 ---
 
 <Layout title=`Capricci - ${product.name}`>
@@ -20,29 +23,32 @@ const reviews = await getReviewsFromProduct(id!)
 			<h2 class="text-xl font-semibold uppercase text-bluegreen">{product.brand}</h2>
 			<h1 class="text-4xl font-semibold capitalize">{product.name}</h1>
 			<p class="text-2xl">{product.presentation} {product.presentation_format}</p>
-
+			<a href="/" class="flex items-center">
+				<Stars rating={product.rating} starsClass="size-5" />
+				<p class="ml-4 mt-2 text-lg text-bluegreen underline">
+					{product.rating} de 5 - {product.quantity_reviews} Reseñas
+				</p>
+			</a>
 			<h3 class="text-lg font-semibold">Descripción</h3>
 			<p>{product.description}</p>
 		</div>
-		<div class="flex flex-col justify-between rounded-xl bg-white p-6">
-			<div class="flex flex-col gap-2">
-				<p class="text-5xl font-semibold">{product.price} €</p>
-				<p class="text-xl text-bluegreen">DISPONIBLE</p>
-				<p class="text-semibold text-xl">
-					Recíbelo entre <span class="text-bluegreen">el XX y el XX de XXXX</span>
-				</p>
-				<a href="/" class="flex items-center py-4">
-					<Stars rating={product.rating} starsClass="size-5" />
-					<p class="ml-4 mt-2 text-lg text-bluegreen underline">
-						{product.rating} de 5 - {product.quantity_reviews} Reseñas
-					</p>
-				</a>
-			</div>
+		<div class="flex flex-col justify-between rounded-xl bg-white px-3 py-4">
+			<p class="text-5xl font-semibold">{product.price} €</p>
+			<p class="text-xl text-bluegreen">DISPONIBLE</p>
+			<p class="text-semibold text-xl">
+				Compralo ya y recíbelo entre <span class="text-bluegreen">el XX y el XX de XXXX</span>
+			</p>
 
-			<div class="flex flex-col">
-				<QuantityDropdown options={[1, 2, 3, 4, 5]} defaultValue={1} client:load />
-				<CartButton />
-			</div>
+			<AddToShoppingCartWithQuantity item={item} client:visible
+				><CartButton /></AddToShoppingCartWithQuantity
+			>
+
+			<button
+				class="flex w-full flex-row items-center justify-center rounded-lg border border-bluegreen p-2 hover:bg-beige"
+				><Heart class="mr-3 size-5 stroke-bluegreen" /><span class="mt-1 text-bluegreen"
+					>Añadir a favoritos</span
+				></button
+			>
 		</div>
 	</div>
 	<div class="flex flex-col gap-4 px-2 pt-2 lg:px-20 lg:pt-14">

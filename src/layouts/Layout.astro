@@ -1,5 +1,6 @@
 ---
 import "@fontsource-variable/league-spartan"
+import { ViewTransitions } from "astro:transitions"
 import Header from "../components/Header/Header.astro"
 
 interface Props {
@@ -18,17 +19,17 @@ const { title } = Astro.props
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
 	<body class="color-bluegray overflow-scroll bg-beige text-bluegray">
 		<Header />
 		<main class="px-2 py-4 sm:px-4 xl:px-40">
 			<slot />
 		</main>
+		<style is:global>
+			body {
+				font-family: "League Spartan Variable", sans-serif;
+			}
+		</style>
 	</body>
 </html>
-
-<style is:global>
-	body {
-		font-family: "League Spartan Variable", sans-serif;
-	}
-</style>
