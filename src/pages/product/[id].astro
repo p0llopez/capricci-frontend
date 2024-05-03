@@ -2,24 +2,30 @@
 import { Image } from "astro:assets"
 import Stars from "@/components/Products/Stars.astro"
 
+import AddToCartWithQuantity from "@/components/Cart/AddToCartForm"
 import CartButton from "@/components/Products/CartButton.astro"
-import AddToShoppingCartWithQuantity from "@/components/ShoppingCart/AddToShoppingCartWithQuantity"
 import Heart from "@/icons/Heart.astro"
 import Layout from "@/layouts/Layout.astro"
-import { getProduct, getReviewsFromProduct } from "@/lib/api"
-import type { ShoppingCartItem } from "@/types/ShoppingCartItem"
+import { getProduct, getReviewsFromProduct } from "@/lib/Api"
+import type { CartItem } from "@/types/CartItem"
 
 const { id } = Astro.params
 
 const product = await getProduct(id!)
 const reviews = await getReviewsFromProduct(id!)
-const item = { id, name: product.name, imageSrc: product.image, quantity: 1 } as ShoppingCartItem
+const item = {
+	id,
+	name: product.name,
+	imageSrc: product.image,
+	quantity: 1,
+	price: product.price,
+} as CartItem
 ---
 
 <Layout title=`Capricci - ${product.name}`>
 	<div class="grid grid-cols-1 gap-4 pt-2 lg:grid-cols-[400px_1fr_1fr] lg:pt-14">
 		<Image src={product.image} inferSize alt={product.name} class="mr-10 rounded" />
-		<div class="flex flex-col gap-3">
+		<div class="flex flex-col gap-4">
 			<h2 class="text-xl font-semibold uppercase text-bluegreen">{product.brand}</h2>
 			<h1 class="text-4xl font-semibold capitalize">{product.name}</h1>
 			<p class="text-2xl">{product.presentation} {product.presentation_format}</p>
@@ -39,8 +45,8 @@ const item = { id, name: product.name, imageSrc: product.image, quantity: 1 } as
 				Compralo ya y recíbelo entre <span class="text-bluegreen">el XX y el XX de XXXX</span>
 			</p>
 
-			<AddToShoppingCartWithQuantity item={item} client:visible
-				><CartButton /></AddToShoppingCartWithQuantity
+			<AddToCartWithQuantity item={item} withQuantity={true} client:visible
+				><CartButton /></AddToCartWithQuantity
 			>
 
 			<button
@@ -55,7 +61,7 @@ const item = { id, name: product.name, imageSrc: product.image, quantity: 1 } as
 		RESEÑAS
 		{
 			reviews.map((review) => (
-				<div class="flex flex-col gap-2">
+				<div class="flex flex-col gap-4">
 					<Stars rating={review.rating} starsClass="size-5" />
 					<p>{review.comment}</p>
 				</div>

@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react"
-import { isCartOpen } from "../../lib/ShoppingCart"
+import { isCartOpen } from "../../lib/Cart"
 
 export default function ShoppingCartHeaderButton() {
 	const $isCartOpen = useStore(isCartOpen)
