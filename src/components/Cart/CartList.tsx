@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react"
-import { cartItems, isCartOpen } from "@/lib/Cart"
+import { cartItems, isCartOpen } from "@/stores/Cart"
 
 export default function CartList() {
 	const $isCartOpen = useStore(isCartOpen)
