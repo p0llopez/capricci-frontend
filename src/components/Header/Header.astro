@@ -1,20 +1,39 @@
 ---
+import CapricciLogo from "@/icons/CapricciLogo.astro"
 import HeaderMenu from "./HeaderMenu.astro"
 import PreHeader from "./PreHeader.astro"
 import SearchBar from "./SearchBar.astro"
-import CapricciLogo from "@/icons/CapricciLogo.astro"
+
+interface Props {
+	onlyLogo?: boolean
+}
+
+const { onlyLogo } = Astro.props
 ---
 
 <header class="sticky top-0 bg-bluegray">
 	<PreHeader />
 	<div
-		class="flex flex-row items-center justify-between px-3 py-4 sm:gap-x-10 sm:px-40 lg:gap-x-16"
+		class:list={[
+			"flex h-20 flex-row items-center px-3 sm:gap-x-10 sm:px-40 lg:gap-x-16",
+			onlyLogo ? "justify-center" : "justify-between",
+		]}
 	>
 		<CapricciLogo class="h-3 w-auto fill-beige xs:h-5 lg:h-7" />
-		<SearchBar class="relative hidden h-8 grow flex-row sm:flex" client:load />
-		<HeaderMenu />
+		{
+			!onlyLogo && (
+				<>
+					<SearchBar class="relative hidden h-8 grow flex-row sm:flex" />
+					<HeaderMenu />
+				</>
+			)
+		}
 	</div>
-	<div class="py-3 sm:hidden">
-		<SearchBar class="mx-3 flex h-8 grow flex-row" />
-	</div>
+	{
+		!onlyLogo && (
+			<div class="py-3 sm:hidden">
+				<SearchBar class="mx-3 flex h-8 grow flex-row" />
+			</div>
+		)
+	}
 </header>

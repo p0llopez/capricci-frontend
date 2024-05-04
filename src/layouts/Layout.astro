@@ -5,9 +5,10 @@ import Header from "../components/Header/Header.astro"
 
 interface Props {
 	title: string
+	onlyLogo?: boolean
 }
 
-const { title } = Astro.props
+const { title, onlyLogo } = Astro.props
 ---
 
 <!doctype html>
@@ -22,8 +23,8 @@ const { title } = Astro.props
 		<ViewTransitions />
 	</head>
 	<body class="color-bluegray overflow-scroll bg-beige text-bluegray">
-		<Header />
-		<main class="px-2 py-4 sm:px-4 xl:px-40">
+		<Header onlyLogo={onlyLogo} />
+		<main class="flex flex-col items-center justify-center px-2 py-4 sm:px-4 xl:px-40">
 			<slot />
 		</main>
 		<style is:global>
