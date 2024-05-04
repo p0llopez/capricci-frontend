@@ -1,21 +1,21 @@
 ---
 import ShoppingCartList from "@/components/Cart/CartList"
-import ShoppingCartHeaderButton from "@/components/Cart/CartWidget"
+import CartWidget from "@/components/Cart/CartWidget"
 import HeartIcon from "@/icons/Heart.astro"
 import UserIcon from "@/icons/User.astro"
 ---
 
-<div class="flex w-auto space-x-6">
-	<a class="flex flex-col items-center transition hover:scale-105" href="/">
-		<UserIcon />
-		<p class="hidden lg:block">Iniciar sesión</p>
+<div class="grid grid-cols-3 place-items-center gap-4">
+	<a class="flex flex-col items-center p-1 transition hover:scale-105" href="/">
+		<UserIcon class="size-4 stroke-beige xs:size-6" />
+		<p class="hidden text-beige lg:block">Iniciar sesión</p>
 	</a>
-	<a class="flex flex-col items-center transition hover:scale-105" href="/">
-		<HeartIcon class="size-4 xs:size-6" />
-		<p class="hidden lg:block">Favoritos</p>
+	<a class="flex flex-col items-center p-1 transition hover:scale-105" href="/">
+		<HeartIcon class="size-4 stroke-beige xs:size-6" />
+		<p class="hidden text-beige lg:block">Favoritos</p>
 	</a>
-	<div>
-		<ShoppingCartHeaderButton client:visible />
+	<div class="relative">
+		<CartWidget client:load />
 		<ShoppingCartList client:load />
 	</div>
 </div>

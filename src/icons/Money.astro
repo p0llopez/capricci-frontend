@@ -1,6 +1,14 @@
+---
+interface Props {
+	class?: string
+}
+
+const { class: className } = Astro.props
+---
+
 <svg
 	xmlns="http://www.w3.org/2000/svg"
-	class="icon icon-tabler icon-tabler-discount-2 size-6"
+	class:list={className}
 	width="24"
 	height="24"
 	viewBox="0 0 24 24"

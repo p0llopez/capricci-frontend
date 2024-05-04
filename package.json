@@ -23,6 +23,7 @@
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.7.0",
+    "big.js": "^6.2.1",
     "nanostores": "^0.10.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -31,6 +32,7 @@
     "@antfu/eslint-config": "0.43.1",
     "@astrojs/check": "^0.5.10",
     "@astrojs/tailwind": "^5.1.0",
+    "@types/big.js": "^6.2.2",
     "@typescript-eslint/parser": "7.7.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",

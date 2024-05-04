@@ -6,11 +6,13 @@ const { class: className } = Astro.props
 
 <div class:list={className}>
 	<input
-		type="text"
-		placeholder="Buscar"
-		class="h-full w-full rounded-l-lg border-y border-l bg-beige pl-3 hover:cursor-pointer focus:border-y-bluegray focus:border-l-bluegray focus:outline-none"
+		type="search"
+		placeholder="¿Qué estás buscando?"
+		class="h-full w-full rounded-lg bg-beige pl-3 hover:cursor-pointer focus:outline-none"
 	/>
-	<div class="flex h-auto w-12 items-center justify-center rounded-r-lg bg-bluegray">
-		<SearchIcon />
-	</div>
+	<span class="absolute inset-y-0 right-0 flex items-center pr-2"
+		><button type="submit" class="focus:shadow-outline p-1 focus:outline-none"
+			><SearchIcon class="size-6 stroke-bluegray" /></button
+		></span
+	>
 </div>
