@@ -28,7 +28,7 @@ const stars = Array.from({ length: 5 }, (_, i) => {
 	{
 		stars.map((component) => {
 			const Component = starComponents[component]
-			return <Component class:list={starsClass} />
+			return <Component class={starsClass} />
 		})
 	}
 </div>

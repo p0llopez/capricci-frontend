@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets"
-import Stars from "@/components/Products/Stars.astro"
-
 import AddToCartWithQuantity from "@/components/Cart/AddToCartForm"
 import CartButton from "@/components/Products/CartButton.astro"
+import Stars from "@/components/Products/Stars.astro"
+import ReviewComponent from "@/components/Reviews/Review"
 import Heart from "@/icons/Heart.astro"
 import Layout from "@/layouts/Layout.astro"
 import { getProduct, getReviewsFromProduct } from "@/lib/Api"
@@ -29,16 +29,16 @@ const item = {
 			<h2 class="text-xl font-semibold uppercase text-bluegreen">{product.brand}</h2>
 			<h1 class="text-4xl font-semibold capitalize">{product.name}</h1>
 			<p class="text-2xl">{product.presentation} {product.presentation_format}</p>
-			<a href="/" class="flex items-center">
+			<div class="flex items-center">
 				<Stars rating={product.rating} starsClass="size-5" />
-				<p class="ml-4 mt-2 text-lg text-bluegreen underline">
+				<p class="ml-4 mt-2 text-lg text-bluegreen">
 					{product.rating} de 5 - {product.quantity_reviews} Reseñas
 				</p>
-			</a>
+			</div>
 			<h3 class="text-lg font-semibold">Descripción</h3>
 			<p>{product.description}</p>
 		</div>
-		<div class="flex flex-col justify-between rounded-xl bg-white px-3 py-4">
+		<div class="flex flex-col justify-between rounded-xl bg-white px-3 py-4 shadow-md">
 			<p class="text-5xl font-semibold">{product.price} €</p>
 			<p class="text-xl text-bluegreen">DISPONIBLE</p>
 			<p class="text-semibold text-xl">
@@ -57,14 +57,14 @@ const item = {
 			>
 		</div>
 	</div>
-	<div class="flex flex-col gap-4 px-2 pt-2 lg:px-20 lg:pt-14">
-		RESEÑAS
+	<hr class="my-10" />
+	<div class="flex flex-col gap-4 px-2 lg:px-20">
+		<h2 class="text-3xl font-semibold">Valoraciones</h2>
 		{
 			reviews.map((review) => (
-				<div class="flex flex-col gap-4">
-					<Stars rating={review.rating} starsClass="size-5" />
-					<p>{review.comment}</p>
-				</div>
+				<ReviewComponent review={review} client:load>
+					<Stars rating={review.rating} starsClass=" size-5" />
+				</ReviewComponent>
 			))
 		}
 	</div>

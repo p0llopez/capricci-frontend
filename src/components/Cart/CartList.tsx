@@ -40,14 +40,11 @@ export default function CartList() {
 	return (
 		$isCartOpen &&
 		Object.values($shoppingCartItems).length > 0 && (
-			<div className="absolute right-0 flex min-w-96 flex-col gap-4 rounded-b-lg rounded-l-lg bg-beige p-2 shadow-2xl">
-				<ul className=" scrollbar-hide flex h-[60vh] flex-col gap-4 overflow-auto">
+			<div className="absolute right-0 flex min-w-96 flex-col gap-4 rounded-b-lg rounded-l-lg bg-beige p-4 shadow-[0_10px_10px_0_rgba(0,0,0,0.5)]">
+				<ul className=" scrollbar-hide flex h-[60vh] flex-col gap-4 overflow-y-auto">
 					{Object.values($shoppingCartItems).map((item) => (
-						<li key={item.id}>
-							<a
-								href="#"
-								className="flex min-w-10 flex-row items-center gap-4 rounded-lg border border-bluegray p-2 text-xl"
-							>
+						<li key={item.id} className="rounded-lg border p-2 hover:border-bluegray">
+							<a href="#" className=" flex h-full flex-1 flex-row items-center gap-4 text-xl">
 								<img src={item.imageSrc} alt={item.name} className="h-[70px]" />
 								<div className="flex w-full flex-col gap-4">
 									<span className="flex items-center justify-between gap-4">
@@ -69,9 +66,19 @@ export default function CartList() {
 									</span>
 									<span className="flex items-center justify-between gap-4">
 										<span className="flex w-24 justify-between px-2">
-											<button onClick={handleDecreaseQuantity(item.id)}>-</button>
+											<button
+												onClick={handleDecreaseQuantity(item.id)}
+												className="hover:text-rouge w-10 transition hover:scale-105"
+											>
+												-
+											</button>
 											<p>{item.quantity}</p>
-											<button onClick={handleIncreaseQuantity(item.id)}>+</button>
+											<button
+												onClick={handleIncreaseQuantity(item.id)}
+												className="w-10 font-semibold transition hover:scale-105 hover:text-bluegreen"
+											>
+												+
+											</button>
 										</span>
 										<p>{Big(item.price).mul(item.quantity).toString()} €</p>
 									</span>
