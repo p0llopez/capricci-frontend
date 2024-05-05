@@ -40,7 +40,7 @@ export default function CartList() {
 	return (
 		$isCartOpen &&
 		Object.values($shoppingCartItems).length > 0 && (
-			<div className="absolute right-0 flex min-w-96 flex-col gap-4 rounded-b-lg rounded-l-lg bg-beige p-4 shadow-[0_10px_10px_0_rgba(0,0,0,0.5)]">
+			<div className="absolute right-0 z-10 flex w-screen flex-col gap-4 bg-beige p-4 shadow-[0_15px_10px_0_rgba(0,0,0,0.5)] md:w-auto md:min-w-96 md:rounded-b-lg md:rounded-l-lg">
 				<ul className=" scrollbar-hide flex h-[60vh] flex-col gap-4 overflow-y-auto">
 					{Object.values($shoppingCartItems).map((item) => (
 						<li key={item.id} className="rounded-lg border p-2 hover:border-bluegray">
@@ -57,7 +57,7 @@ export default function CartList() {
 												stroke-linecap="round"
 												stroke-linejoin="round"
 												stroke-width="1.5"
-												className=" hover:stroke-rouge size-6 transition hover:scale-105"
+												className=" size-6 transition hover:scale-105 hover:stroke-rouge"
 												viewBox="0 0 24 24"
 											>
 												<path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
@@ -68,7 +68,7 @@ export default function CartList() {
 										<span className="flex w-24 justify-between px-2">
 											<button
 												onClick={handleDecreaseQuantity(item.id)}
-												className="hover:text-rouge w-10 transition hover:scale-105"
+												className="w-10 transition hover:scale-105 hover:text-rouge"
 											>
 												-
 											</button>

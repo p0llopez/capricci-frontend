@@ -51,7 +51,7 @@ export default function CartWidget() {
 				)}
 			</span>
 			<p
-				className={`hidden lg:block ${$isCartOpen && $totalCartItems > 0 ? "text-bluegray" : "text-beige"}`}
+				className={`hidden xl:block ${$isCartOpen && $totalCartItems > 0 ? "text-bluegray" : "text-beige"}`}
 			>
 				Carrito
 			</p>

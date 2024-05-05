@@ -8,13 +8,13 @@ import UserIcon from "@/icons/User.astro"
 <div class="grid grid-cols-3 place-items-center gap-4">
 	<a class="flex flex-col items-center p-1 transition hover:scale-105" href="/login">
 		<UserIcon class="size-4 stroke-beige xs:size-6" />
-		<p class="hidden text-beige lg:block">Iniciar sesión</p>
+		<p class="hidden text-beige xl:block">Iniciar sesión</p>
 	</a>
 	<a class="flex flex-col items-center p-1 transition hover:scale-105" href="/">
 		<HeartIcon class="size-4 stroke-beige xs:size-6" />
-		<p class="hidden text-beige lg:block">Favoritos</p>
+		<p class="hidden text-beige xl:block">Favoritos</p>
 	</a>
-	<div class="relative">
+	<div class="md:relative">
 		<CartWidget client:load />
 		<ShoppingCartList client:load />
 	</div>
