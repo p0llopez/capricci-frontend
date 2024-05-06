@@ -19,6 +19,14 @@ export const getProducts = async (): Promise<Product[]> => {
 	return (await response.json()) as Product[]
 }
 
+export const getProductsFiltered = async (query: string): Promise<Product[]> => {
+	const response = await fetch(`${API_BASE_URL}/products?search=${query}`)
+	if (!response.ok) {
+		throw new Error(`API request failed with status ${response.status}`)
+	}
+	return (await response.json()) as Product[]
+}
+
 export const getReviewsFromProduct = async (productId: string): Promise<Review[]> => {
 	const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`)
 	if (!response.ok) {

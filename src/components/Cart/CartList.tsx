@@ -54,9 +54,9 @@ export default function CartList() {
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"
 												stroke="#2c3e50"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="1.5"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth="1.5"
 												className=" size-6 transition hover:scale-105 hover:stroke-rouge"
 												viewBox="0 0 24 24"
 											>

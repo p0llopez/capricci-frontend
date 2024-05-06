@@ -16,7 +16,8 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/react": "^3.3.1",
+    "@astrojs/cloudflare": "^10.2.5",
+    "@astrojs/react": "^3.3.2",
     "@fontsource-variable/league-spartan": "^5.0.20",
     "@nanostores/persistent": "^0.10.1",
     "@nanostores/react": "^0.7.2",

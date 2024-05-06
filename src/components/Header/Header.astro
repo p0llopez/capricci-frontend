@@ -1,7 +1,7 @@
 ---
 import HeaderMenu from "./HeaderMenu.astro"
 import PreHeader from "./PreHeader.astro"
-import SearchBar from "./SearchBar.astro"
+import SearchBar from "./SearchBar"
 import CapricciLogo from "@/icons/CapricciLogo.astro"
 
 interface Props {
@@ -23,7 +23,7 @@ const { onlyLogo } = Astro.props
 		{
 			!onlyLogo && (
 				<>
-					<SearchBar class="relative hidden h-8 grow flex-row sm:flex" />
+					<SearchBar className="relative hidden h-8 grow flex-row sm:flex" client:load />
 					<HeaderMenu />
 				</>
 			)
