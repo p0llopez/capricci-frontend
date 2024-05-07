@@ -1,7 +1,7 @@
 import type { Review } from "@/types/Review"
 import type { Product } from "@/types/Product"
 
-const API_BASE_URL = "https://capricci-backend.onrender.com/api"
+const API_BASE_URL = "http://127.0.0.1:8000/api"
 
 export const getProduct = async (id: string): Promise<Product> => {
 	const response = await fetch(`${API_BASE_URL}/products/${id}`)
@@ -11,18 +11,13 @@ export const getProduct = async (id: string): Promise<Product> => {
 	return (await response.json()) as Product
 }
 
-export const getProducts = async (): Promise<Product[]> => {
-	const response = await fetch(`${API_BASE_URL}/products`)
+export const getProducts = async (query?: string): Promise<Product[]> => {
+	const url = query
+			? `${API_BASE_URL}/products?search=${query}`
+			: `${API_BASE_URL}/products`
+	const response = await fetch(url)
 	if (!response.ok) {
-		throw new Error(`API request failed with status ${response.status}`)
-	}
-	return (await response.json()) as Product[]
-}
-
-export const getProductsFiltered = async (query: string): Promise<Product[]> => {
-	const response = await fetch(`${API_BASE_URL}/products?search=${query}`)
-	if (!response.ok) {
-		throw new Error(`API request failed with status ${response.status}`)
+			throw new Error(`API request failed with status ${response.status}`)
 	}
 	return (await response.json()) as Product[]
 }

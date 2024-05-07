@@ -2,7 +2,7 @@ import { useState } from "react"
 import { addCartItem, isCartOpen } from "../../stores/Cart"
 import type { CartItem } from "@/types/CartItem"
 
-export default function AddToCartWithQuantityForm({
+export default function AddToCartForm({
 	children,
 	item,
 	withQuantity,
