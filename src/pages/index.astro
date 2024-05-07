@@ -3,6 +3,6 @@ import Layout from "../layouts/Layout.astro"
 import Products from "@/components/Products/Products"
 ---
 
-<Layout title="Capricci">
+<Layout title="Capricci" withHeaderMenu={true} withSearchBar={true}>
 	<Products client:load />
 </Layout>

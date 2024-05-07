@@ -5,10 +5,11 @@ import Header from "../components/Header/Header.astro"
 
 interface Props {
 	title: string
-	onlyLogo?: boolean
+	withHeaderMenu?: boolean
+	withSearchBar?: boolean
 }
 
-const { title, onlyLogo } = Astro.props
+const { title, withSearchBar, withHeaderMenu } = Astro.props
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ const { title, onlyLogo } = Astro.props
 		<ViewTransitions />
 	</head>
 	<body class="color-bluegray overflow-scroll bg-beige text-bluegray">
-		<Header onlyLogo={onlyLogo} />
+		<Header withSearchBar={withSearchBar} withHeaderMenu={withHeaderMenu} />
 		<main class="flex flex-col items-center justify-center px-2 py-4 sm:px-4 xl:px-40">
 			<slot />
 		</main>

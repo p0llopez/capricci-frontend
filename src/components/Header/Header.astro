@@ -1,14 +1,15 @@
 ---
+import CapricciLogo from "@/icons/CapricciLogo.astro"
 import HeaderMenu from "./HeaderMenu.astro"
 import PreHeader from "./PreHeader.astro"
 import SearchBar from "./SearchBar"
-import CapricciLogo from "@/icons/CapricciLogo.astro"
 
 interface Props {
-	onlyLogo?: boolean
+	withHeaderMenu?: boolean
+	withSearchBar?: boolean
 }
 
-const { onlyLogo } = Astro.props
+const { withHeaderMenu, withSearchBar } = Astro.props
 ---
 
 <header class="sticky top-0 bg-bluegray">
@@ -16,23 +17,21 @@ const { onlyLogo } = Astro.props
 	<div
 		class:list={[
 			"flex h-10 flex-row items-center px-3 py-2 sm:gap-x-10 sm:px-40 md:h-20 lg:gap-x-16",
-			onlyLogo ? "justify-center" : "justify-between",
+			!withSearchBar && !withHeaderMenu ? "justify-center" : "justify-between",
 		]}
 	>
 		<CapricciLogo class="h-3 w-auto fill-beige xs:h-5 lg:h-7" />
 		{
-			!onlyLogo && (
-				<>
-					<SearchBar className="relative hidden h-8 grow flex-row sm:flex" client:load />
-					<HeaderMenu />
-				</>
+			withSearchBar && (
+				<SearchBar className="relative hidden h-8 grow flex-row sm:flex" client:load />
 			)
 		}
+		{withHeaderMenu && <HeaderMenu />}
 	</div>
 	{
-		!onlyLogo && (
+		withSearchBar && (
 			<div class="pb-2 sm:hidden">
-				<SearchBar class="relative mx-3 flex h-8 flex-grow flex-row" />
+				<SearchBar className="relative mx-3 flex h-8 flex-grow flex-row" client:load />
 			</div>
 		)
 	}

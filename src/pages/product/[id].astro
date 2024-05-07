@@ -21,7 +21,7 @@ const item = {
 } as CartItem
 ---
 
-<Layout title=`Capricci - ${product.name}`>
+<Layout title=`Capricci - ${product.name}` withHeaderMenu={true}>
 	<div class="grid grid-cols-1 gap-4 pt-2 lg:grid-cols-[400px_1fr_1fr] lg:pt-14">
 		<img src={product.image} alt={product.name} class="mr-10 rounded" />
 		<div class="flex flex-col gap-4">
