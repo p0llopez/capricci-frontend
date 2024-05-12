@@ -2,18 +2,6 @@ import { useStore } from "@nanostores/react"
 import CardProduct from "./CardProduct"
 import { products } from "@/stores/Products"
 
-// interface Product {
-// 	id: string
-// 	brand: string
-// 	image: string
-// 	name: string
-// 	presentation: number
-// 	presentation_format: string
-// 	price: number
-// 	stock: number
-// 	rating: number
-// }
-
 const Products: React.FC = () => {
 	const $products = useStore(products)
 
@@ -29,7 +17,6 @@ const Products: React.FC = () => {
 					presentation={product.presentation}
 					presentation_format={product.presentation_format}
 					price={product.price}
-					stock={product.stock}
 					rating={product.rating}
 				/>
 			))}

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import Star from "@/components/stars/Star"
+import Star from "@/components/Stars/Star"
 
 interface Props {
 	rating: number

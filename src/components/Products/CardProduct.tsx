@@ -1,5 +1,5 @@
 import React from "react"
-import Stars from "../stars/Stars"
+import Stars from "../Stars/Stars"
 import AddToCart from "@/components/Cart/AddToCartForm"
 import CartButton from "@/components/Cart/CartButton"
 import type { CartItem } from "@/types/CartItem"
@@ -12,7 +12,6 @@ interface Props {
 	presentation: number
 	presentation_format: string
 	price: number
-	stock: number
 	rating: number
 }
 
@@ -24,7 +23,6 @@ const CardProduct: React.FC<Props> = ({
 	presentation,
 	presentation_format,
 	price,
-	stock,
 	rating,
 }) => {
 	const item: CartItem = { id, name, imageSrc: image, quantity: 1, price }

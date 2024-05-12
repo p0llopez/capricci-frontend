@@ -28,9 +28,9 @@ const Star: React.FC<Props> = ({ type, className }) => {
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					stroke="#DFAE00"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					strokeWidth="1.5"
 					className={className}
 					viewBox="0 0 24 24"
 				>

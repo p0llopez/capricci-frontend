@@ -1,8 +1,8 @@
 ---
-import CapricciLogo from "@/icons/CapricciLogo.astro"
-import HeaderMenu from "./HeaderMenu.astro"
+import HeaderMenu from "./HeaderMenu"
 import PreHeader from "./PreHeader.astro"
 import SearchBar from "./SearchBar"
+import CapricciLogo from "@/icons/CapricciLogo.astro"
 
 interface Props {
 	withHeaderMenu?: boolean
@@ -26,7 +26,7 @@ const { withHeaderMenu, withSearchBar } = Astro.props
 				<SearchBar className="relative hidden h-8 grow flex-row sm:flex" client:load />
 			)
 		}
-		{withHeaderMenu && <HeaderMenu />}
+		{withHeaderMenu && <HeaderMenu client:load />}
 	</div>
 	{
 		withSearchBar && (
