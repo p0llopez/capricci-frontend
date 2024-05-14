@@ -8,7 +8,12 @@ const LogoutButton = () => {
 
 	return (
 		<>
-			<button onClick={handleLogout}>Cerrar sesión</button>
+			<button
+				onClick={handleLogout}
+				className="w-full rounded-md bg-bluegray py-3 font-semibold text-beige transition hover:bg-bluegray-70 focus:outline-none"
+			>
+				¿Quieres cerrar tu sesion?
+			</button>
 		</>
 	)
 }

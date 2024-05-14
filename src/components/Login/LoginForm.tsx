@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import LoginFormButton from "./LoginFormButton"
 import { checkUserExists, loginUser, registerUser } from "@/lib/Api"
+import { useAuth } from "@/contexts/authContext"
 
 interface FormData {
 	email: string
@@ -15,6 +16,7 @@ interface FormData {
 }
 
 export default function LoginForm() {
+	const { login } = useAuth()
 	const [isNewUser, setIsNewUser] = useState<boolean | null>(null)
 	const [mainTitle, setMainTitle] = useState<string>("Para empezar...")
 	const [mainMessage, setMainMessage] = useState<string>(
@@ -88,8 +90,7 @@ export default function LoginForm() {
 			}
 
 			const response = await loginUser(data.email, data.password!)
-			localStorage.setItem("accessToken", response.access)
-			localStorage.setItem("refreshToken", response.refresh)
+			login(response.access, response.refresh)
 			window.location.href = "/"
 		} catch (error) {
 			console.error("Error logging in user:", error)
