@@ -1,5 +1,6 @@
 import { useStore } from "@nanostores/react"
 import Big from "big.js"
+import ProtectedRoute from "../Protected/ProtectedRoute"
 import {
 	cartItems,
 	clearCart,
@@ -9,6 +10,7 @@ import {
 	isCartOpen,
 	removeCartItem,
 } from "@/stores/Cart"
+import { makePurchase, refreshAccessToken, verifyRefreshToken } from "@/lib/Api"
 
 export default function CartList() {
 	const $isCartOpen = useStore(isCartOpen)
@@ -22,9 +24,38 @@ export default function CartList() {
 
 	const handleBuy = () => (e: React.MouseEvent) => {
 		e.preventDefault()
-		// eslint-disable-next-line no-alert
-		alert("Compra realizada!")
-		clearCart()
+		const userId = localStorage.getItem("userId") as string
+		verifyRefreshToken(localStorage.getItem("refreshToken"))
+			.then((isTokenValid) => {
+				if (!isTokenValid) {
+					// eslint-disable-next-line no-alert
+					alert("Tu sesión ha expirado. Por favor, inicia sesión de nuevo.")
+					localStorage.removeItem("accessToken")
+					localStorage.removeItem("refreshToken")
+				} else {
+					refreshAccessToken().catch((error) => {
+						console.error("Error refreshing access token:", error)
+						localStorage.removeItem("accessToken")
+						localStorage.removeItem("refreshToken")
+					})
+				}
+			})
+			.catch((error) => {
+				console.error("Error verifying refresh token:", error)
+				localStorage.removeItem("accessToken")
+				localStorage.removeItem("refreshToken")
+			})
+		makePurchase($shoppingCartItems, userId)
+			.then(() => {
+				clearCart()
+				// eslint-disable-next-line no-alert
+				alert("Compra realizada con éxito.")
+			})
+			.catch((error) => {
+				console.error("Error making purchase:", error)
+				// eslint-disable-next-line no-alert
+				alert("Error haciendo la compra. Por favor, inténtalo de nuevo.")
+			})
 	}
 
 	const handleIncreaseQuantity = (id: string) => (e: React.MouseEvent) => {
@@ -95,9 +126,24 @@ export default function CartList() {
 					<p>{totalAmount} €</p>
 				</span>
 
-				<button className="rounded-lg bg-bluegreen-70 p-2 hover:bg-bluegreen" onClick={handleBuy()}>
-					<p className="text-beige">Comprar</p>
-				</button>
+				<ProtectedRoute
+					authenticated={
+						<button
+							className="rounded-lg bg-bluegreen-70 p-2 hover:bg-bluegreen"
+							onClick={handleBuy()}
+						>
+							<p className="text-beige">Comprar</p>
+						</button>
+					}
+					nonAuthenticated={
+						<a
+							className="item-center flex justify-center rounded-lg bg-bluegreen-70 p-2 hover:bg-bluegreen"
+							href="/login"
+						>
+							<p className="text-beige">Iniciar sesión</p>
+						</a>
+					}
+				/>
 			</div>
 		)
 	)

@@ -2,6 +2,7 @@ const LogoutButton = () => {
 	const handleLogout = () => {
 		localStorage.removeItem("accessToken")
 		localStorage.removeItem("refreshToken")
+		localStorage.removeItem("userId")
 		window.location.href = "/"
 	}
 

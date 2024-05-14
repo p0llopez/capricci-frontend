@@ -1,5 +1,6 @@
 import type { Review } from "@/types/Review"
 import type { Product } from "@/types/Product"
+import type { CartItem } from "@/types/CartItem"
 
 const API_BASE_URL = "http://127.0.0.1:8000/api"
 
@@ -40,7 +41,7 @@ export const checkUserExists = async (email: string): Promise<boolean> => {
 export const loginUser = async (
 	username: string,
 	password: string
-): Promise<{ username: string; refresh: string; access: string }> => {
+): Promise<{ user: { id: string; email: string }; refresh: string; access: string }> => {
 	const response = await fetch(`${API_BASE_URL}/token/pair`, {
 		method: "POST",
 		headers: {
@@ -51,7 +52,7 @@ export const loginUser = async (
 	if (!response.ok) {
 		throw new Error(`API request failed with status ${response.status}`)
 	}
-	return (await response.json()) as { username: string; refresh: string; access: string }
+	return (await response.json()) as { user: { id: string; email: string }; refresh: string; access: string }
 }
 
 export const refreshAccessToken = async () => {
@@ -74,9 +75,8 @@ export const refreshAccessToken = async () => {
 			throw new Error("Failed to refresh access token")
 		}
 
-		const data = (await response.json()) as { refresh_token: string; access_token: string }
-		const newAccessToken = data.access_token
-
+		const data = (await response.json()) as { refresh: string; access: string }
+		const newAccessToken = data.access
 		localStorage.setItem("accessToken", newAccessToken)
 
 		return newAccessToken
@@ -123,4 +123,34 @@ export const registerUser = async (
 	if (!response.ok) {
 		throw new Error(`API request failed with status ${response.status}`)
 	}
+}
+
+export const makePurchase = async (cart: CartItem[], userId: string) => {
+	const body = JSON.stringify({
+		order_items: cart.map((item) => ({
+			product_id: item.id,
+			quantity: item.quantity,
+			unit_price: item.price,
+		})),
+		points_used: 0,
+		payment_status: "PAID",
+		status: "ORDERED",
+		shipping_price: 2.99,
+		user_id: userId,
+	})
+
+	const response = await fetch(`${API_BASE_URL}/orders`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+		},
+		body,
+	})
+
+	if (!response.ok) {
+		throw new Error(`API request failed with status ${response.status}`)
+	}
+
+	return response.json()
 }
