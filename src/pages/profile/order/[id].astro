@@ -1,0 +1,10 @@
+---
+import OrderDetail from "@/components/Profile/OrderDetail"
+import Layout from "@/layouts/Layout.astro"
+
+const { id } = Astro.params as { id: string }
+---
+
+<Layout title="Order">
+	<OrderDetail orderId={id} client:load />
+</Layout>

@@ -1,6 +1,10 @@
 import { useStore } from "@nanostores/react"
-import Big from "big.js"
-import ProtectedRoute from "../Protected/ProtectedRoute"
+import { Big } from "big.js"
+
+import ProtectedRoute from "@/components/Protected/ProtectedRoute"
+import { getMyProfile } from "@/lib/api/profile"
+import { makePurchase } from "@/lib/api/purchase"
+import { refreshAccessToken, verifyToken } from "@/lib/api/user"
 import {
 	cartItems,
 	clearCart,
@@ -10,11 +14,12 @@ import {
 	isCartOpen,
 	removeCartItem,
 } from "@/stores/Cart"
-import { makePurchase, refreshAccessToken, verifyRefreshToken } from "@/lib/Api"
+import { clearTokens, user } from "@/stores/User"
 
 export default function CartList() {
 	const $isCartOpen = useStore(isCartOpen)
 	const $shoppingCartItems = useStore(cartItems)
+	const $user = useStore(user)
 	const totalAmount = getTotalAmount()
 
 	const handleDelete = (id: string) => (e: React.MouseEvent) => {
@@ -24,37 +29,53 @@ export default function CartList() {
 
 	const handleBuy = () => (e: React.MouseEvent) => {
 		e.preventDefault()
-		const userId = localStorage.getItem("userId") as string
-		verifyRefreshToken(localStorage.getItem("refreshToken"))
+		verifyToken($user.accesToken)
 			.then((isTokenValid) => {
 				if (!isTokenValid) {
 					// eslint-disable-next-line no-alert
 					alert("Tu sesión ha expirado. Por favor, inicia sesión de nuevo.")
-					localStorage.removeItem("accessToken")
-					localStorage.removeItem("refreshToken")
+					clearTokens()
 				} else {
-					refreshAccessToken().catch((error) => {
+					refreshAccessToken($user.refreshToken).catch((error) => {
 						console.error("Error refreshing access token:", error)
-						localStorage.removeItem("accessToken")
-						localStorage.removeItem("refreshToken")
+						clearTokens()
 					})
 				}
 			})
 			.catch((error) => {
 				console.error("Error verifying refresh token:", error)
-				localStorage.removeItem("accessToken")
-				localStorage.removeItem("refreshToken")
+				clearTokens()
 			})
-		makePurchase($shoppingCartItems, userId)
-			.then(() => {
-				clearCart()
-				// eslint-disable-next-line no-alert
-				alert("Compra realizada con éxito.")
+		getMyProfile()
+			.then((profile) => {
+				const availabePoints = profile.points
+				let points = 0
+
+				if (
+					// eslint-disable-next-line no-alert
+					window.confirm(
+						`¿Quieres usar tus puntos? Tienes ${availabePoints} puntos que equivalen a ${Big(availabePoints).mul(0.01).toString()} €`
+					)
+				)
+					points = availabePoints
+
+				const shippingPrice = Number.parseInt(totalAmount) > 49 ? 0 : 2.99
+				makePurchase($shoppingCartItems, shippingPrice, points)
+					.then(() => {
+						clearCart()
+						// eslint-disable-next-line no-alert
+						alert("Compra realizada con éxito.")
+					})
+					.catch((error) => {
+						console.error("Error making purchase:", error)
+						// eslint-disable-next-line no-alert
+						alert("Error haciendo la compra. Por favor, inténtalo de nuevo.")
+					})
 			})
 			.catch((error) => {
-				console.error("Error making purchase:", error)
+				console.error("Error getting profile:", error)
 				// eslint-disable-next-line no-alert
-				alert("Error haciendo la compra. Por favor, inténtalo de nuevo.")
+				alert("Error al obtener tu perfil. Por favor, inténtalo de nuevo.")
 			})
 	}
 
@@ -72,10 +93,13 @@ export default function CartList() {
 		$isCartOpen &&
 		Object.values($shoppingCartItems).length > 0 && (
 			<div className="absolute right-0 z-10 flex w-screen flex-col gap-4 bg-beige p-4 shadow-[0_15px_10px_0_rgba(0,0,0,0.5)] md:w-auto md:min-w-96 md:rounded-b-lg md:rounded-l-lg">
-				<ul className=" scrollbar-hide flex h-[60vh] flex-col gap-4 overflow-y-auto">
+				<ul className=" scrollbar-hide flex max-h-[calc(100vh-30rem)] flex-col gap-4 overflow-y-auto">
 					{Object.values($shoppingCartItems).map((item) => (
 						<li key={item.id} className="rounded-lg border p-2 hover:border-bluegray">
-							<a href="#" className=" flex h-full flex-1 flex-row items-center gap-4 text-xl">
+							<a
+								href={`product/${item.id}`}
+								className=" flex h-full flex-1 flex-row items-center gap-4 text-xl"
+							>
 								<img src={item.imageSrc} alt={item.name} className="h-[70px]" />
 								<div className="flex w-full flex-col gap-4">
 									<span className="flex items-center justify-between gap-4">
@@ -121,9 +145,24 @@ export default function CartList() {
 
 				<hr />
 
+				<span className="flex justify-between text-bluegray-50 ">
+					<p>Total productos</p>
+					<p>{totalAmount} €</p>
+				</span>
+
+				<span className="flex justify-between text-bluegray-50 ">
+					<p>Gastos de envío</p>
+					<p>{Number.parseInt(totalAmount) > 49 ? 0 : 2.99} €</p>
+				</span>
+
 				<span className="flex justify-between text-xl">
 					<p>Total (impuestos incluidos):</p>
-					<p>{totalAmount} €</p>
+					<p>
+						{Number.parseInt(totalAmount) > 49
+							? totalAmount
+							: Big(totalAmount).add(2.99).toString()}
+						{"	"}€
+					</p>
 				</span>
 
 				<ProtectedRoute

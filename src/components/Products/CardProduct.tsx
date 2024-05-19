@@ -1,7 +1,8 @@
 import React from "react"
-import Stars from "../Stars/Stars"
+
 import AddToCart from "@/components/Cart/AddToCartForm"
 import CartButton from "@/components/Cart/CartButton"
+import Stars from "@/components/Stars/Stars"
 import type { CartItem } from "@/types/CartItem"
 
 interface Props {

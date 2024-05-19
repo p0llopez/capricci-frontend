@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { addCartItem, isCartOpen } from "../../stores/Cart"
+
+import { addCartItem, isCartOpen } from "@/stores/Cart"
 import type { CartItem } from "@/types/CartItem"
 
 export default function AddToCartForm({

@@ -1,5 +1,6 @@
 // import { useEffect, useRef } from "react"
 import { useStore } from "@nanostores/react"
+
 import { isCartOpen, totalCartItems } from "@/stores/Cart"
 
 export default function CartWidget() {

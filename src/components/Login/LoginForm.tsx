@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useState } from "react"
-import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
 import * as yup from "yup"
-import LoginFormButton from "./LoginFormButton"
+
+import LoginFormButton from "@/components/Login/LoginFormButton"
 import { checkUserExists, loginUser, registerUser } from "@/lib/Api"
-import { useAuth } from "@/contexts/authContext"
+import { setTokens } from "@/stores/User"
 
 interface FormData {
 	email: string
@@ -16,7 +17,6 @@ interface FormData {
 }
 
 export default function LoginForm() {
-	const { login } = useAuth()
 	const [isNewUser, setIsNewUser] = useState<boolean | null>(null)
 	const [mainTitle, setMainTitle] = useState<string>("Para empezar...")
 	const [mainMessage, setMainMessage] = useState<string>(
@@ -83,15 +83,17 @@ export default function LoginForm() {
 		try {
 			while (true) {
 				const emailExists = await checkUserExists(data.email)
-				if (emailExists) {
-					break
-				}
+				if (emailExists) break
+
 				await new Promise((resolve) => setTimeout(resolve, 1000))
 			}
 
-			const response = await loginUser(data.email, data.password!)
-			login(response.access, response.refresh)
-			window.location.href = "/"
+			loginUser(data.email, data.password!)
+				.then((response) => {
+					setTokens(response.access, response.refresh)
+					window.location.href = "/"
+				})
+				.catch(() => setError("password", { type: "manual", message: "Contraseña incorrecta" }))
 		} catch (error) {
 			console.error("Error logging in user:", error)
 		}

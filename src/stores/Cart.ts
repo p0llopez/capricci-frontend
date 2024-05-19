@@ -1,6 +1,7 @@
-import { atom } from "nanostores"
 import { persistentAtom } from "@nanostores/persistent"
-import Big from "big.js"
+import { Big } from "big.js"
+import { atom } from "nanostores"
+
 import type { CartItem } from "@/types/CartItem"
 
 export const isCartOpen = atom(false)

@@ -1,5 +1,6 @@
 import { useStore } from "@nanostores/react"
-import CardProduct from "./CardProduct"
+
+import CardProduct from "@/components/Products/CardProduct"
 import { products } from "@/stores/Products"
 
 const Products: React.FC = () => {
