@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import * as yup from "yup"
 
 import LoginFormButton from "@/components/Login/LoginFormButton"
-import { checkUserExists, loginUser, registerUser } from "@/lib/Api"
+import { checkUserExists, loginUser, registerUser } from "@/lib/api/user"
 import { setTokens } from "@/stores/User"
 
 interface FormData {

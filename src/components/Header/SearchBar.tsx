@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react"
 
-import { getProducts } from "@/lib/Api"
+import { getProducts } from "@/lib/api/product"
 import { products } from "@/stores/Products"
 
 interface Props {
