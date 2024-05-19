@@ -1,0 +1,21 @@
+---
+import LogoutButton from "@/components/Login/LogoutButton"
+import Orders from "@/components/Profile/Orders"
+import Reviews from "@/components/Profile/Reviews"
+import UserInfo from "@/components/Profile/UserInfo"
+import Layout from "@/layouts/Layout.astro"
+---
+
+<Layout title="Perfil" withHeaderMenu>
+	<div class="w-full">
+		<UserInfo client:load />
+		<hr />
+		<h3 class="my-2 text-lg font-bold">Tus pedidos:</h3>
+		<Orders client:load />
+		<hr />
+		<h3 class="my-2 text-lg font-bold">Tus reseñas:</h3>
+		<Reviews client:load />
+		<hr class="mb-10" />
+		<LogoutButton client:load />
+	</div>
+</Layout>
