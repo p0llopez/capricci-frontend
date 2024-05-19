@@ -1,4 +1,3 @@
-import cloudflare from "@astrojs/cloudflare"
 import react from "@astrojs/react"
 import tailwind from "@astrojs/tailwind"
 import { defineConfig } from "astro/config"
@@ -15,7 +14,7 @@ export default defineConfig({
 		domains: ["cdn.capriccipineda.es"],
 	},
 	output: "server",
-	adapter: cloudflare({
-		imageService: "cloudflare",
+	adapter: node({
+		mode: 'standalone',
 	}),
 })
