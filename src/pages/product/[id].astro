@@ -1,7 +1,7 @@
 ---
 import AddToCartWithQuantity from "@/components/Cart/AddToCartForm"
 import CartButton from "@/components/Cart/CartButton"
-import ReviewComponent from "@/components/Reviews/Review"
+import ReviewComponent from "@/components/Reviews/Review.astro"
 import Stars from "@/components/Stars/Stars"
 import Heart from "@/icons/Heart.astro"
 import Layout from "@/layouts/Layout.astro"
@@ -59,12 +59,6 @@ const item = {
 
 	<div class="mt-20 flex w-full flex-col gap-4">
 		<h2 class="text-3xl font-semibold">Valoraciones</h2>
-		{
-			reviews.map((review) => (
-				<ReviewComponent review={review} client:load>
-					<Stars rating={review.rating} starsClass=" size-5" client:load />
-				</ReviewComponent>
-			))
-		}
+		{reviews.map((review) => <ReviewComponent review={review} />)}
 	</div>
 </Layout>
