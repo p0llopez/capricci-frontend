@@ -16,8 +16,8 @@ export default function ReviewCard(review: Review) {
 	}
 
 	return (
-		<div className="grid w-full grid-cols-6  items-center gap-4 rounded-lg border px-4 py-2 transition">
-			<img src={review.product.image} alt={review.product.name} className="h-24" />
+		<div className="flex w-full flex-col items-center gap-4  rounded-lg border px-4 py-2 transition md:grid md:grid-cols-6">
+			<img src={review.product.image} alt={review.product.name} className="hidden h-24 md:block" />
 			<p className="text-left text-lg">
 				{review.product.name} ({format(new Date(review.created_at), "dd/MM/yyyy")})
 			</p>
