@@ -110,30 +110,37 @@ export default function OrderDetail({ orderId }: Props) {
 	return (
 		<>
 			{order ? (
-				<div className="flex w-full flex-col gap-4 p-10">
+				<div className="flex w-full flex-col gap-4 p-2 md:p-10">
 					<span className="flex items-center justify-between gap-4">
 						<h1 className="mb-4 text-2xl font-bold">PEDIDO: {order.id}</h1>
-						<GoBackButton />
+						<GoBackButton className="hidden md:flex" />
 					</span>
 					<hr />
 					{order.order_items && (
 						<ul className="flex flex-col gap-4">
 							{order.order_items.map((item) => (
-								<li key={item.id} className="grid grid-cols-5 items-center text-left">
-									<img src={item.product.image} alt={item.product.name} className="h-24" />
-									<p className="text-left text-sm">
+								<li
+									key={item.id}
+									className="justify-centermd:grid flex flex-col items-center md:grid-cols-5 md:items-center md:text-left"
+								>
+									<img
+										src={item.product.image}
+										alt={item.product.name}
+										className="hidden md:block md:h-24"
+									/>
+									<p className="text-lg md:text-left md:text-sm">
 										{item.product.name} | {item.product.brand}
 									</p>
-									<p className="text-sm">
+									<p className="text-lg font-bold md:text-sm">
 										{item.quantity} {item.quantity > 1 ? "unidades" : "unidad"}
 									</p>
-									<p className="text-sm">
+									<p className="text-lg font-bold md:text-sm">
 										{Big(item.unit_price).mul(item.quantity).toString()} € ({item.unit_price} {""}
 										€/unidad)
 									</p>
 									<>
 										<button
-											className="rounded-md bg-bluegray p-2 font-semibold text-beige transition hover:bg-bluegray-70 focus:outline-none"
+											className="w-full rounded-md border border-bluegray p-2 font-semibold transition focus:outline-none md:w-auto"
 											onClick={() => handleReviewButtonClick(item.product.id)}
 										>
 											Crear Reseña
@@ -145,11 +152,23 @@ export default function OrderDetail({ orderId }: Props) {
 						</ul>
 					)}
 					<hr />
-					<p className="mb-2 text-lg">Precio de los productos: {order.items_price} €</p>
-					<p className="mb-2 text-lg">Descuento: -{order.discount} €</p>
-					<p className="mb-2 text-lg">Gastos de envío: {order.shipping_price} €</p>
+					<span className="mb-2 flex justify-between text-lg">
+						<p>Precio de los productos</p> <p>{order.items_price} €</p>
+					</span>
+					<span className="mb-2 flex justify-between text-lg">
+						<p>Descuento</p>
+						<p>{order.discount} €</p>
+					</span>
+					<span className="mb-2 flex justify-between text-lg">
+						<p>Gastos de envío</p>
+						<p>{order.shipping_price} €</p>
+					</span>
 					<hr />
-					<p className="text-lg">Total: {order.total_price} €</p>
+					<span className="flex justify-between text-lg">
+						<p>Total</p>
+						<p>{order.total_price} €</p>
+					</span>
+					<GoBackButton className="md:hidden" />
 				</div>
 			) : (
 				<p>Loading...</p>
