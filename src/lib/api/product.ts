@@ -1,7 +1,7 @@
 import type { Product } from "@/types/Product"
 import type { Review } from "@/types/Review"
 
-const API_BASE_URL = "http://127.0.0.1:8000/api"
+const API_BASE_URL = import.meta.env.PUBLIC_API_BASE_URL as string
 
 export const getProduct = async (id: string): Promise<Product> => {
 	const response = await fetch(`${API_BASE_URL}/products/${id}`)

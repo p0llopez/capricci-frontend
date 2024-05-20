@@ -17,7 +17,7 @@ export default function Orders() {
 	}, [])
 
 	return (
-		<div className="scrollbar-hide flex max-h-96 flex-col gap-2 overflow-y-auto pr-4">
+		<div className="scrollbar-hide flex max-h-96 flex-col gap-2 overflow-y-auto">
 			{allOrders.length > 0 ? (
 				allOrders.map((order) => (
 					<OrderCard

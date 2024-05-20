@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import * as yup from "yup"
 
 import LoginFormButton from "@/components/Login/LoginFormButton"
-import { checkUserExists, loginUser, registerUser } from "@/lib/Api"
+import { checkUserExists, loginUser, registerUser } from "@/lib/api/user"
 import { setTokens } from "@/stores/User"
 
 interface FormData {
@@ -142,10 +142,31 @@ export default function LoginForm() {
 					setError("email", { type: "manual", message: "Error al comprobar el email" })
 				})
 		} else {
-			handleLogin(data).catch((error) => {
-				console.error("Error logging in user:", error)
-				setError("password", { type: "manual", message: "Contraseña incorrecta" })
-			})
+			checkUserExists(data.email)
+				.then((emailExists) => {
+					if (!emailExists) {
+						setIsNewUser(false)
+						setError("email", {
+							type: "manual",
+							message: "No existe ninguna cuenta con este email, vuelve a intentarlo",
+						})
+					} else {
+						registerUser(data.email, data.password!, data.name!, data.lastName!)
+							.then(() => {
+								handleLogin(data).catch((error) => {
+									console.error("Error logging in user:", error)
+								})
+							})
+							.catch((error) => {
+								console.error("Error creating user:", error)
+								setError("email", { type: "manual", message: "Error al crear el usuario" })
+							})
+					}
+				})
+				.catch((error) => {
+					console.error("Error checking user:", error)
+					setError("email", { type: "manual", message: "Error al comprobar el email" })
+				})
 		}
 	}
 
@@ -164,7 +185,7 @@ export default function LoginForm() {
 				<input
 					{...register(fieldName)}
 					aria-invalid={errors[fieldName] ? "true" : "false"}
-					className={`w-full rounded-md border bg-beige px-4 py-2 ${errors[fieldName] ? "border border-rouge" : ""}`}
+					className={`w-full rounded-md border bg-beige px-4 py-2 outline-none ${errors[fieldName] ? "border border-rouge" : ""}`}
 					placeholder={placeholder}
 					type={fieldName === "password" || fieldName === "repeatedPassword" ? "password" : "text"}
 				/>
@@ -174,7 +195,7 @@ export default function LoginForm() {
 	}
 
 	return (
-		<div className="absolute bottom-0 h-[calc(100vh-6rem)] w-[calc(100vw-1rem)] rounded-t-lg bg-beige px-4 py-8 shadow-[0_-5px_15px_0_rgba(0,0,0,0.05)] md:h-[calc(100vh-10rem)] md:w-3/4 md:px-8 xl:w-2/5">
+		<div className="absolute bottom-0 h-[85vh] w-[calc(100vw-1rem)] rounded-t-lg bg-beige px-4 py-8 shadow-[0_-5px_15px_0_rgba(0,0,0,0.05)] md:h-[calc(100vh-10rem)] md:w-3/4 md:px-8 xl:w-2/5">
 			<div className="mb-1 text-center">
 				<h2 className="text-2xl font-bold">{mainTitle}</h2>
 				<p className=" text-gray-600">{mainMessage}</p>
