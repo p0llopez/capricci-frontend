@@ -97,7 +97,7 @@ export default function CartList() {
 					{Object.values($shoppingCartItems).map((item) => (
 						<li key={item.id} className="rounded-lg border p-2 hover:border-bluegray">
 							<a
-								href={`product/${item.id}`}
+								href={`/product/${item.id}`}
 								className=" flex h-full flex-1 flex-row items-center gap-4 text-xl"
 							>
 								<img src={item.imageSrc} alt={item.name} className="h-[70px]" />
