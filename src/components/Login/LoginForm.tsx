@@ -174,7 +174,7 @@ export default function LoginForm() {
 	}
 
 	return (
-		<div className="absolute bottom-0 h-[calc(100vh-6rem)] w-[calc(100vw-1rem)] rounded-t-lg bg-beige px-4 py-8 shadow-[0_-5px_15px_0_rgba(0,0,0,0.05)] md:h-[calc(100vh-10rem)] md:w-3/4 md:px-8 xl:w-2/5">
+		<div className="absolute bottom-0 h-[85vh] w-[calc(100vw-1rem)] rounded-t-lg bg-beige px-4 py-8 shadow-[0_-5px_15px_0_rgba(0,0,0,0.05)] md:h-[calc(100vh-10rem)] md:w-3/4 md:px-8 xl:w-2/5">
 			<div className="mb-1 text-center">
 				<h2 className="text-2xl font-bold">{mainTitle}</h2>
 				<p className=" text-gray-600">{mainMessage}</p>
