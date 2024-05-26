@@ -121,7 +121,7 @@ export default function OrderDetail({ orderId }: Props) {
 							{order.order_items.map((item) => (
 								<li
 									key={item.id}
-									className="justify-centermd:grid flex flex-col items-center md:grid-cols-5 md:items-center md:text-left"
+									className="flex flex-col items-center justify-center md:grid md:grid-cols-5 md:items-center md:text-left"
 								>
 									<img
 										src={item.product.image}
@@ -131,10 +131,10 @@ export default function OrderDetail({ orderId }: Props) {
 									<p className="text-lg md:text-left md:text-sm">
 										{item.product.name} | {item.product.brand}
 									</p>
-									<p className="text-lg font-bold md:text-sm">
+									<p className="text-lg font-bold md:text-right md:text-sm">
 										{item.quantity} {item.quantity > 1 ? "unidades" : "unidad"}
 									</p>
-									<p className="text-lg font-bold md:text-sm">
+									<p className="text-lg font-bold md:text-center md:text-sm">
 										{Big(item.unit_price).mul(item.quantity).toString()} € ({item.unit_price} {""}
 										€/unidad)
 									</p>
