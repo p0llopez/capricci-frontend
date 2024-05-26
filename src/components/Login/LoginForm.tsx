@@ -151,15 +151,14 @@ export default function LoginForm() {
 							message: "No existe ninguna cuenta con este email, vuelve a intentarlo",
 						})
 					} else {
-						registerUser(data.email, data.password!, data.name!, data.lastName!)
-							.then(() => {
-								handleLogin(data).catch((error) => {
-									console.error("Error logging in user:", error)
-								})
+						loginUser(data.email, data.password!)
+							.then((response) => {
+								setTokens(response.access, response.refresh)
+								window.location.href = "/"
 							})
 							.catch((error) => {
-								console.error("Error creating user:", error)
-								setError("email", { type: "manual", message: "Error al crear el usuario" })
+								console.error("Error logging in user:", error)
+								setError("email", { type: "manual", message: "Error al iniciar sesión" })
 							})
 					}
 				})
