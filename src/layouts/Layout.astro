@@ -6,9 +6,9 @@ import { ViewTransitions } from "astro:transitions"
 import Header from "@/components/Header/Header.astro"
 
 interface Props {
-	title: string
-	withHeaderMenu?: boolean
-	withSearchBar?: boolean
+  title: string
+  withHeaderMenu?: boolean
+  withSearchBar?: boolean
 }
 
 const { title, withSearchBar, withHeaderMenu } = Astro.props
@@ -16,42 +16,42 @@ const { title, withSearchBar, withHeaderMenu } = Astro.props
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<ViewTransitions />
-	</head>
-	<body class="color-bluegray overflow-scroll bg-beige text-bluegray">
-		<Header withSearchBar={withSearchBar} withHeaderMenu={withHeaderMenu} />
-		<main class="flex flex-col items-center justify-center px-2 py-4 sm:px-4 xl:px-40">
-			<slot />
-		</main>
-		<style is:global>
-			body {
-				font-family: "League Spartan Variable", sans-serif;
-			}
-			/* clears the ‘X’ from Internet Explorer */
-			input[type="search"]::-ms-clear {
-				display: none;
-				width: 0;
-				height: 0;
-			}
-			input[type="search"]::-ms-reveal {
-				display: none;
-				width: 0;
-				height: 0;
-			}
-			/* clears the ‘X’ from Chrome */
-			input[type="search"]::-webkit-search-decoration,
-			input[type="search"]::-webkit-search-cancel-button,
-			input[type="search"]::-webkit-search-results-button,
-			input[type="search"]::-webkit-search-results-decoration {
-				display: none;
-			}
-		</style>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body class="color-bluegray overflow-scroll bg-beige text-bluegray">
+    <Header withSearchBar={withSearchBar} withHeaderMenu={withHeaderMenu} />
+    <main class="flex flex-col items-center justify-center px-2 py-4 sm:px-4 xl:px-40">
+      <slot />
+    </main>
+    <style is:global>
+      body {
+        font-family: "League Spartan Variable", sans-serif;
+      }
+      /* clears the ‘X’ from Internet Explorer */
+      input[type="search"]::-ms-clear {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+      input[type="search"]::-ms-reveal {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+      /* clears the ‘X’ from Chrome */
+      input[type="search"]::-webkit-search-decoration,
+      input[type="search"]::-webkit-search-cancel-button,
+      input[type="search"]::-webkit-search-results-button,
+      input[type="search"]::-webkit-search-results-decoration {
+        display: none;
+      }
+    </style>
+  </body>
 </html>

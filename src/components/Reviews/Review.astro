@@ -4,96 +4,96 @@ import Stars from "@/components/Stars/Stars"
 import type { Review } from "@/types/Review"
 
 export interface Props {
-	review: Review
+  review: Review
 }
 
 const { review } = Astro.props
 ---
 
 <div class="rounded-md bg-white p-4 shadow-md">
-	<div class="mb-2 flex items-center justify-between">
-		<span class="flex items-center gap-4">
-			<h3 class="text-lg font-semibold">
-				{review.user.first_name ? `${review.user.first_name} ${review.user.last_name}` : "Anónimo"}
-			</h3>
-			<h4 class="text-bluegray-50">{format(new Date(review.created_at), "dd/MM/yyyy")}</h4>
-		</span>
-		<Stars rating={review.rating} starsClass=" size-5" client:load />
-	</div>
-	<truncated-comment data-comment={review.comment}>
-		<p class="max-w-full break-words"></p>
-		<button class="toggle-comment underline" style="display: none">Mostrar más</button>
-	</truncated-comment>
+  <div class="mb-2 flex items-center justify-between">
+    <span class="flex items-center gap-4">
+      <h3 class="text-lg font-semibold">
+        {review.user.first_name ? `${review.user.first_name} ${review.user.last_name}` : "Anónimo"}
+      </h3>
+      <h4 class="text-bluegray-50">{format(new Date(review.created_at), "dd/MM/yyyy")}</h4>
+    </span>
+    <Stars rating={review.rating} starsClass=" size-5" client:load />
+  </div>
+  <truncated-comment data-comment={review.comment}>
+    <p class="max-w-full break-words"></p>
+    <button class="toggle-comment underline" style="display: none">Mostrar más</button>
+  </truncated-comment>
 </div>
 
 <script>
-	class TruncatedComment extends HTMLElement {
-		isExpanded: boolean = false
-		toggleButton!: HTMLButtonElement
-		pElement!: HTMLParagraphElement
+  class TruncatedComment extends HTMLElement {
+    isExpanded: boolean = false
+    toggleButton!: HTMLButtonElement
+    pElement!: HTMLParagraphElement
 
-		constructor() {
-			super()
-			this.isExpanded = false
-		}
+    constructor() {
+      super()
+      this.isExpanded = false
+    }
 
-		connectedCallback() {
-			this.toggleButton = this.querySelector(".toggle-comment") as HTMLButtonElement
-			this.pElement = this.querySelector("p") as HTMLParagraphElement
-			this.initComponent()
-		}
+    connectedCallback() {
+      this.toggleButton = this.querySelector(".toggle-comment") as HTMLButtonElement
+      this.pElement = this.querySelector("p") as HTMLParagraphElement
+      this.initComponent()
+    }
 
-		initComponent() {
-			const comment = this.dataset.comment as string
-			const lineWidth = this.pElement.offsetWidth
-			const font = window.getComputedStyle(this.pElement).font
-			const maxLength = this.getMaxLength(comment, lineWidth, font)
-			this.updateComment(comment, maxLength, this.isExpanded)
+    initComponent() {
+      const comment = this.dataset.comment as string
+      const lineWidth = this.pElement.offsetWidth
+      const font = window.getComputedStyle(this.pElement).font
+      const maxLength = this.getMaxLength(comment, lineWidth, font)
+      this.updateComment(comment, maxLength, this.isExpanded)
 
-			this.toggleButton.addEventListener("click", () => {
-				this.isExpanded = !this.isExpanded
-				this.updateComment(comment, maxLength, this.isExpanded)
-			})
-		}
+      this.toggleButton.addEventListener("click", () => {
+        this.isExpanded = !this.isExpanded
+        this.updateComment(comment, maxLength, this.isExpanded)
+      })
+    }
 
-		updateComment(comment: string, maxLength: number, isExpanded: boolean) {
-			const truncatedComment = isExpanded
-				? comment
-				: `${comment.slice(0, maxLength)}${comment.length > maxLength ? "..." : ""}`
-			this.pElement.textContent = truncatedComment
-			this.toggleButton.textContent = isExpanded ? "Mostrar menos" : "Mostrar más"
-			comment.length > maxLength
-				? (this.toggleButton.style.display = "inline")
-				: (this.toggleButton.style.display = "none")
-		}
+    updateComment(comment: string, maxLength: number, isExpanded: boolean) {
+      const truncatedComment = isExpanded
+        ? comment
+        : `${comment.slice(0, maxLength)}${comment.length > maxLength ? "..." : ""}`
+      this.pElement.textContent = truncatedComment
+      this.toggleButton.textContent = isExpanded ? "Mostrar menos" : "Mostrar más"
+      comment.length > maxLength
+        ? (this.toggleButton.style.display = "inline")
+        : (this.toggleButton.style.display = "none")
+    }
 
-		getMaxLength(comment: string, lineWidth: number, font: string) {
-			const canvas = document.createElement("canvas")
-			const context = canvas.getContext("2d") as CanvasRenderingContext2D
-			context.font = font
+    getMaxLength(comment: string, lineWidth: number, font: string) {
+      const canvas = document.createElement("canvas")
+      const context = canvas.getContext("2d") as CanvasRenderingContext2D
+      context.font = font
 
-			let maxLength = 0
-			let lastFitIndex = 0
-			let currentLine = ""
-			const words = comment.split(" ")
+      let maxLength = 0
+      let lastFitIndex = 0
+      let currentLine = ""
+      const words = comment.split(" ")
 
-			for (let i = 0; i < words.length; i++) {
-				const word = words[i]
-				const testLine = currentLine.trim() + (currentLine ? " " : "") + word
-				const testWidth = context.measureText(testLine).width
+      for (let i = 0; i < words.length; i++) {
+        const word = words[i]
+        const testLine = currentLine.trim() + (currentLine ? " " : "") + word
+        const testWidth = context.measureText(testLine).width
 
-				if (testWidth <= lineWidth) {
-					currentLine = testLine
-					maxLength += word.length + (currentLine ? 1 : 0)
-					lastFitIndex = maxLength
-				} else {
-					break
-				}
-			}
+        if (testWidth <= lineWidth) {
+          currentLine = testLine
+          maxLength += word.length + (currentLine ? 1 : 0)
+          lastFitIndex = maxLength
+        } else {
+          break
+        }
+      }
 
-			return lastFitIndex
-		}
-	}
+      return lastFitIndex
+    }
+  }
 
-	customElements.define("truncated-comment", TruncatedComment)
+  customElements.define("truncated-comment", TruncatedComment)
 </script>

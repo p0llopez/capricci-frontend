@@ -1,4 +1,4 @@
 export interface User {
-	accesToken: string
-	refreshToken: string
+  accesToken: string
+  refreshToken: string
 }

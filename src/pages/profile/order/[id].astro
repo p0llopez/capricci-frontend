@@ -6,5 +6,5 @@ const { id } = Astro.params as { id: string }
 ---
 
 <Layout title="Order">
-	<OrderDetail orderId={id} client:load />
+  <OrderDetail orderId={id} client:load />
 </Layout>
