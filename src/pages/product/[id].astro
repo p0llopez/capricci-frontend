@@ -13,52 +13,52 @@ const { id } = Astro.params
 const product = await getProduct(id!)
 const reviews = await getReviewsFromProduct(id!)
 const item = {
-	id,
-	name: product.name,
-	imageSrc: product.image,
-	quantity: 1,
-	price: product.price,
+  id,
+  name: product.name,
+  imageSrc: product.image,
+  quantity: 1,
+  price: product.price,
 } as CartItem
 ---
 
 <Layout title=`Capricci - ${product.name}` withHeaderMenu={true}>
-	<div class="grid grid-cols-1 gap-4 pt-2 lg:grid-cols-[400px_1fr_1fr] lg:pt-14">
-		<img src={product.image} alt={product.name} class="mr-10 rounded" />
-		<div class="flex flex-col gap-4">
-			<h2 class="text-xl font-semibold uppercase text-bluegreen">{product.brand}</h2>
-			<h1 class="text-4xl font-semibold capitalize">{product.name}</h1>
-			<p class="text-2xl">{product.presentation} {product.presentation_format}</p>
-			<div class="flex items-center">
-				<Stars rating={product.rating} starsClass="size-5" />
-				<p class="ml-4 mt-2 text-lg text-bluegreen">
-					{product.rating} de 5 - {product.quantity_reviews} Reseñas
-				</p>
-			</div>
-			<h3 class="text-lg font-semibold">Descripción</h3>
-			<p>{product.description}</p>
-		</div>
-		<div class="flex flex-col justify-between gap-2 rounded-xl bg-white px-3 py-4 shadow-md">
-			<p class="text-5xl font-semibold">{product.price} €</p>
-			<p class="text-xl text-bluegreen">DISPONIBLE</p>
-			<p class="text-semibold text-xl">
-				Compralo ya y recíbelo entre <span class="text-bluegreen">el XX y el XX de XXXX</span>
-			</p>
+  <div class="grid grid-cols-1 gap-4 pt-2 lg:grid-cols-[400px_1fr_1fr] lg:pt-14">
+    <img src={product.image} alt={product.name} class="mr-10 rounded" />
+    <div class="flex flex-col gap-4">
+      <h2 class="text-xl font-semibold uppercase text-bluegreen">{product.brand}</h2>
+      <h1 class="text-4xl font-semibold capitalize">{product.name}</h1>
+      <p class="text-2xl">{product.presentation} {product.presentation_format}</p>
+      <div class="flex items-center">
+        <Stars rating={product.rating} starsClass="size-5" />
+        <p class="ml-4 mt-2 text-lg text-bluegreen">
+          {product.rating} de 5 - {product.quantity_reviews} Reseñas
+        </p>
+      </div>
+      <h3 class="text-lg font-semibold">Descripción</h3>
+      <p>{product.description}</p>
+    </div>
+    <div class="flex flex-col justify-between gap-2 rounded-xl bg-white px-3 py-4 shadow-md">
+      <p class="text-5xl font-semibold">{product.price} €</p>
+      <p class="text-xl text-bluegreen">DISPONIBLE</p>
+      <p class="text-semibold text-xl">
+        Compralo ya y recíbelo entre <span class="text-bluegreen">el XX y el XX de XXXX</span>
+      </p>
 
-			<AddToCartWithQuantity item={item} withQuantity={true} client:visible
-				><CartButton /></AddToCartWithQuantity
-			>
+      <AddToCartWithQuantity item={item} withQuantity={true} client:visible
+        ><CartButton /></AddToCartWithQuantity
+      >
 
-			<button
-				class="flex w-full flex-row items-center justify-center rounded-lg border border-bluegreen p-2 hover:bg-beige"
-				><Heart class="mr-3 size-5 stroke-bluegreen" /><span class="mt-1 text-bluegreen"
-					>Añadir a favoritos</span
-				></button
-			>
-		</div>
-	</div>
+      <button
+        class="flex w-full flex-row items-center justify-center rounded-lg border border-bluegreen p-2 hover:bg-beige"
+        ><Heart class="mr-3 size-5 stroke-bluegreen" /><span class="mt-1 text-bluegreen"
+          >Añadir a favoritos</span
+        ></button
+      >
+    </div>
+  </div>
 
-	<div class="mt-20 flex w-full flex-col gap-4">
-		<h2 class="text-3xl font-semibold">Valoraciones</h2>
-		{reviews.map((review) => <ReviewComponent review={review} />)}
-	</div>
+  <div class="mt-20 flex w-full flex-col gap-4">
+    <h2 class="text-3xl font-semibold">Valoraciones</h2>
+    {reviews.map((review) => <ReviewComponent review={review} />)}
+  </div>
 </Layout>
