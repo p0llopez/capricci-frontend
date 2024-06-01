@@ -1,5 +1,16 @@
 [Production](https://shop.capriccipineda.es/)
 
+# Capricci Frontend
+
+It's a frontend for a shot made with Astro.
+
+## 🚀 Table of Contents
+
+- [Commands](#-commands)
+- [Improvements](#-improvements)
+- [License](#-license)
+- [Acknowledgements](#-acknowledgements)
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
@@ -18,15 +29,17 @@ All commands are run from the root of the project, from a terminal:
 | `npm run lint:fix`        | Run lint and fix                                 |
 | `npm run prepare`         | Run format and lint                              |
 
-## 📝 To Do's
+## 📝 Improvements
 
-- [ ] Cambiar el favicon
-- [ ] Transformar los componentes de React a componentes de Astro
-- [ ] Transformar el resto de los componentes de React a componentes de Preact
-- [ ] Añadir un pie de página
-- [ ] Rediseñar el encabezado
-- [ ] Rediseñar mi perfil
-- [ ] Mejorar la obtención de productos
+Here are some improvements that can be made
+
+- [ ] Change the favicon
+- [ ] Transform React components into Astro components
+- [ ] Transform the rest of the React components into Preact components
+- [ ] Add a footer
+- [ ] Redesign the header
+- [ ] Redesign my profile
+- [ ] Improve product retrieval
 
 ## 📄 License
 
@@ -41,3 +54,7 @@ All commands are run from the root of the project, from a terminal:
 - [Nano Store](https://github.com/nanostores/nanostores)
 - [Jose](https://github.com/panva/jose)
 - [Big.js](https://github.com/MikeMcl/big.js)
+
+[⬆ Back to Top](#-capricci-backend)
+
+[//]: # "Links"
