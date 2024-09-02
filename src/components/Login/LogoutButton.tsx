@@ -1,6 +1,6 @@
 import { clearTokens } from "@/stores/User"
 
-const LogoutButton = () => {
+export default function LogoutButton() {
   const handleLogout = () => {
     clearTokens()
     window.location.href = "/"
@@ -15,5 +15,3 @@ const LogoutButton = () => {
     </button>
   )
 }
-
-export default LogoutButton

@@ -16,20 +16,17 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/react": "3.6.2",
+    "@astrojs/preact": "^3.5.2",
     "@astrojs/vercel": "7.8.0",
     "@fontsource-variable/league-spartan": "^5.0.21",
     "@hookform/resolvers": "^3.9.0",
     "@nanostores/persistent": "^0.10.2",
-    "@nanostores/react": "^0.7.3",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
+    "@nanostores/preact": "^0.5.2",
     "astro": "4.15.2",
     "big.js": "^6.2.1",
     "date-fns": "^3.6.0",
     "nanostores": "^0.10.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "preact": "^10.23.2",
     "react-hook-form": "^7.53.0",
     "yup": "^1.4.0"
   },

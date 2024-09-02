@@ -1,10 +1,8 @@
-import React from "react"
-
-import ShoppingCartList from "@/components/Cart/CartList"
+import CartList from "@/components/Cart/CartList"
 import CartWidget from "@/components/Cart/CartWidget"
 import ProtectedRoute from "@/components/Protected/ProtectedRoute"
 
-const HeaderMenu: React.FC = () => {
+export default function HeaderMenu() {
   return (
     <div className="grid grid-cols-3 place-items-center gap-4">
       <ProtectedRoute
@@ -63,10 +61,8 @@ const HeaderMenu: React.FC = () => {
       </a>
       <div className="md:relative">
         <CartWidget />
-        <ShoppingCartList />
+        <CartList />
       </div>
     </div>
   )
 }
-
-export default HeaderMenu

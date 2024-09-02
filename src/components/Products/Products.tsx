@@ -1,9 +1,9 @@
-import { useStore } from "@nanostores/react"
+import { useStore } from "@nanostores/preact"
 
 import CardProduct from "@/components/Products/CardProduct"
 import { products } from "@/stores/Products"
 
-const Products: React.FC = () => {
+export default function Products() {
   const $products = useStore(products)
 
   return (
@@ -24,5 +24,3 @@ const Products: React.FC = () => {
     </div>
   )
 }
-
-export default Products

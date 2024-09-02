@@ -1,10 +1,8 @@
-import React from "react"
-
 interface Props {
   className?: string
 }
 
-const CartButton: React.FC<Props> = ({ className }) => {
+export default function CartButton({ className }: Props) {
   return (
     <button
       className={`flex w-full flex-row items-center justify-center p-2 text-beige ${className}`}
@@ -28,5 +26,3 @@ const CartButton: React.FC<Props> = ({ className }) => {
     </button>
   )
 }
-
-export default CartButton

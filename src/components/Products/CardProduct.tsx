@@ -1,5 +1,3 @@
-import React from "react"
-
 import AddToCart from "@/components/Cart/AddToCartForm"
 import CartButton from "@/components/Cart/CartButton"
 import Stars from "@/components/Stars/Stars"
@@ -16,7 +14,7 @@ interface Props {
   rating: number
 }
 
-const CardProduct: React.FC<Props> = ({
+export default function CardProduct({
   id,
   brand,
   image,
@@ -25,7 +23,7 @@ const CardProduct: React.FC<Props> = ({
   presentation_format,
   price,
   rating,
-}) => {
+}: Props) {
   const item: CartItem = { id, name, imageSrc: image, quantity: 1, price }
 
   return (
@@ -48,5 +46,3 @@ const CardProduct: React.FC<Props> = ({
     </div>
   )
 }
-
-export default CardProduct

@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import { useState } from "preact/hooks"
+import type { JSX } from "preact/jsx-runtime"
 
-const PopupForm: React.FC = (open) => {
+export default function PopupForm(open: boolean) {
   const [isOpen, setIsOpen] = useState(open)
   const [quantity, setQuantity] = useState("1")
 
@@ -8,13 +9,13 @@ const PopupForm: React.FC = (open) => {
     setIsOpen(!isOpen)
   }
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: JSX.TargetedEvent<HTMLFormElement>) => {
     event.preventDefault()
     togglePopup() // Close the popup after submission
   }
 
   const handleQuantityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setQuantity(event.target.value)
+    setQuantity(event.currentTarget.value)
   }
 
   return (
@@ -60,5 +61,3 @@ const PopupForm: React.FC = (open) => {
     </>
   )
 }
-
-export default PopupForm

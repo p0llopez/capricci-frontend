@@ -10,7 +10,7 @@ export default function ReviewCard(review: Review) {
     window.location.reload()
   }
 
-  const handleDeleteButton = (id: string) => (e: React.MouseEvent) => {
+  const handleDeleteButton = (id: string) => (e: MouseEvent) => {
     e.preventDefault()
     void handleDelete(id)
   }

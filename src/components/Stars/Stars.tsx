@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { useMemo } from "preact/hooks"
 
 import Star from "@/components/Stars/Star"
 
@@ -7,7 +7,7 @@ interface Props {
   starsClass: string
 }
 
-const Stars: React.FC<Props> = ({ rating, starsClass }) => {
+export default function Stars({ rating, starsClass }: Props) {
   const stars = useMemo<string[]>(() => {
     const fullStars = Math.floor(rating)
     const hasHalfStar = rating - fullStars >= 0.5
@@ -28,5 +28,3 @@ const Stars: React.FC<Props> = ({ rating, starsClass }) => {
     </div>
   )
 }
-
-export default Stars

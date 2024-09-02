@@ -1,20 +1,20 @@
-import { useStore } from "@nanostores/react"
-import React, { useEffect, useState } from "react"
+import { useStore } from "@nanostores/preact"
+import { useEffect, useState } from "preact/hooks"
 
 import { refreshAccessToken, verifyToken } from "@/lib/api/user"
 import { clearTokens, setTokens, user } from "@/stores/User"
 
-interface ProtectedRouteProps {
+interface Props {
   authenticated: React.ReactNode
   nonAuthenticated?: React.ReactNode
   loadingComponent?: React.ReactNode
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+export default function ProtectedRoute({
   authenticated,
   nonAuthenticated,
   loadingComponent,
-}) => {
+}: Props) {
   const $user = useStore(user)
   const { accesToken, refreshToken } = $user
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -62,5 +62,3 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   else if (isAuthenticated) return <>{authenticated}</>
   else return nonAuthenticated ? <>{nonAuthenticated}</> : null
 }
-
-export default ProtectedRoute

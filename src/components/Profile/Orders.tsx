@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "preact/hooks"
 
 import OrderCard from "@/components/Profile/OrderCard"
 import { getMyOrders } from "@/lib/api/profile"

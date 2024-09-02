@@ -1,27 +1,27 @@
-import { useState } from "react"
+import { useState } from "preact/hooks"
 
 import { addCartItem, isCartOpen } from "@/stores/Cart"
 import type { CartItem } from "@/types/CartItem"
+import type { ComponentChildren, JSX } from "preact"
+import type { ChangeEvent } from "preact/compat"
 
-export default function AddToCartForm({
-  children,
-  item,
-  withQuantity,
-}: {
-  children: React.ReactNode
+interface Props {
+  children: ComponentChildren
   item: CartItem
   withQuantity: boolean
-}) {
+}
+
+export default function AddToCartForm({ children, item, withQuantity }: Props) {
   const [quantity, setQuantity] = useState(1)
 
-  function addToShoppingCart(e: React.FormEvent) {
+  function addToShoppingCart(e: JSX.TargetedEvent<HTMLFormElement>) {
     e.preventDefault()
     isCartOpen.set(true)
     addCartItem(item, quantity)
   }
 
-  function handleQuantityChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setQuantity(Number(e.target.value))
+  function handleQuantityChange(e: ChangeEvent<HTMLSelectElement>) {
+    setQuantity(Number(e.currentTarget.value))
   }
 
   return (

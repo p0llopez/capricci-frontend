@@ -1,11 +1,9 @@
-import React from "react"
-
 interface Props {
   type: "filled" | "half" | "empty"
   className?: string
 }
 
-const Star: React.FC<Props> = ({ type, className }) => {
+export default function Star({ type, className }: Props) {
   switch (type) {
     case "filled":
       return (
@@ -60,5 +58,3 @@ const Star: React.FC<Props> = ({ type, className }) => {
       return null
   }
 }
-
-export default Star

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "preact/hooks"
 
 import { getMyProfile } from "@/lib/api/profile"
 import { refreshAccessToken, verifyToken } from "@/lib/api/user"

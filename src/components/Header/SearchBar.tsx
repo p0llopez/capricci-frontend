@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react"
-
 import { getProducts } from "@/lib/api/product"
 import { products } from "@/stores/Products"
+import type { ChangeEvent } from "preact/compat"
+import { useCallback, useEffect, useState } from "preact/hooks"
 
 interface Props {
   className?: string
 }
 
-const SearchInput: React.FC<Props> = ({ className }) => {
+export default function SearchInput({ className }: Props) {
   const [searchTerm, setSearchTerm] = useState("")
 
   const fetchProducts = async (search: string) => {
@@ -20,8 +20,8 @@ const SearchInput: React.FC<Props> = ({ className }) => {
   }, [])
 
   const handleOnChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const search = e.target.value
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const search = e.currentTarget.value
       setSearchTerm(search)
       void fetchProducts(search)
     },
@@ -54,4 +54,3 @@ const SearchInput: React.FC<Props> = ({ className }) => {
     </div>
   )
 }
-export default SearchInput

@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useState } from "react"
+import { useState } from "preact/hooks"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 

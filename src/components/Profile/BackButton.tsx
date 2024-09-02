@@ -1,10 +1,8 @@
-import React from "react"
-
 interface Props {
   className?: string
 }
 
-const GoBackButton: React.FC<Props> = ({ className }) => {
+export default function GoBackButton({ className }: Props) {
   const goBack = () => {
     window.history.back() // Go back to the previous page in history
   }
@@ -18,5 +16,3 @@ const GoBackButton: React.FC<Props> = ({ className }) => {
     </button>
   )
 }
-
-export default GoBackButton
