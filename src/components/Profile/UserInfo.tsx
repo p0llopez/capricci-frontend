@@ -39,10 +39,10 @@ export default function UserInfo() {
               const userData = await getMyProfile()
               setUser(userData)
             } else {
-              setError("Failed to refresh access token.")
+              setError("Failed to refresh access token. (" + error + ")")
             }
           } catch (error) {
-            setError("An error occurred while fetching user profile.")
+            setError("An error occurred while fetching user profile. (" + error + ")")
             clearTokens()
             window.location.href = "/"
           }

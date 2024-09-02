@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -48,7 +47,7 @@ export default function LoginForm() {
       isNewUser === true
         ? yup
             .string()
-            .matches(/^[a-zA-Z\s]*$/, "El nombre solo puede contener letras")
+            .matches(/^[\sA-Za-z]*$/, "El nombre solo puede contener letras")
             .max(50, "El nombre no puede tener más de 50 caracteres")
             .required("El nombre es obligatorio")
         : yup.string(),
@@ -56,7 +55,7 @@ export default function LoginForm() {
       isNewUser === true
         ? yup
             .string()
-            .matches(/^[a-zA-Z\s]*$/, "Los apellidos solo pueden contener letras")
+            .matches(/^[\sA-Za-z]*$/, "Los apellidos solo pueden contener letras")
             .max(100, "Los apellidos no pueden tener más de 100 caracteres")
             .required("Los apellidos son obligatorios")
         : yup.string(),
@@ -88,7 +87,7 @@ export default function LoginForm() {
         await new Promise((resolve) => setTimeout(resolve, 1000))
       }
 
-      loginUser(data.email, data.password!)
+      loginUser(data.email, data.password ?? "")
         .then((response) => {
           setTokens(response.access, response.refresh)
           window.location.href = "/"
@@ -125,7 +124,7 @@ export default function LoginForm() {
           if (emailExists) {
             setError("email", { type: "manual", message: "El email ya está en uso" })
           } else {
-            registerUser(data.email, data.password!, data.name!, data.lastName!)
+            registerUser(data.email, data.password ?? "", data.name ?? "", data.lastName ?? "")
               .then(() => {
                 handleLogin(data).catch((error) => {
                   console.error("Error logging in user:", error)
@@ -151,7 +150,7 @@ export default function LoginForm() {
               message: "No existe ninguna cuenta con este email, vuelve a intentarlo",
             })
           } else {
-            loginUser(data.email, data.password!)
+            loginUser(data.email, data.password ?? "")
               .then((response) => {
                 setTokens(response.access, response.refresh)
                 window.location.href = "/"

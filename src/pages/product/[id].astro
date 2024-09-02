@@ -10,8 +10,8 @@ import type { CartItem } from "@/types/CartItem"
 
 const { id } = Astro.params
 
-const product = await getProduct(id!)
-const reviews = await getReviewsFromProduct(id!)
+const product = await getProduct(id ?? "")
+const reviews = await getReviewsFromProduct(id ?? "")
 const item = {
   id,
   name: product.name,

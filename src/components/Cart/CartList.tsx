@@ -32,7 +32,6 @@ export default function CartList() {
     verifyToken($user.accesToken)
       .then((isTokenValid) => {
         if (!isTokenValid) {
-          // eslint-disable-next-line no-alert
           alert("Tu sesión ha expirado. Por favor, inicia sesión de nuevo.")
           clearTokens()
         } else {
@@ -52,7 +51,6 @@ export default function CartList() {
         let points = 0
 
         if (
-          // eslint-disable-next-line no-alert
           window.confirm(
             `¿Quieres usar tus puntos? Tienes ${availabePoints} puntos que equivalen a ${Big(availabePoints).mul(0.01).toString()} €`
           )
@@ -63,18 +61,15 @@ export default function CartList() {
         makePurchase($shoppingCartItems, shippingPrice, points)
           .then(() => {
             clearCart()
-            // eslint-disable-next-line no-alert
             alert("Compra realizada con éxito.")
           })
           .catch((error) => {
             console.error("Error making purchase:", error)
-            // eslint-disable-next-line no-alert
             alert("Error haciendo la compra. Por favor, inténtalo de nuevo.")
           })
       })
       .catch((error) => {
         console.error("Error getting profile:", error)
-        // eslint-disable-next-line no-alert
         alert("Error al obtener tu perfil. Por favor, inténtalo de nuevo.")
       })
   }

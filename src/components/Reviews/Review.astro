@@ -1,7 +1,7 @@
 ---
-import { format } from "date-fns"
 import Stars from "@/components/Stars/Stars"
 import type { Review } from "@/types/Review"
+import { format } from "date-fns"
 
 export interface Props {
   review: Review
@@ -28,7 +28,7 @@ const { review } = Astro.props
 
 <script>
   class TruncatedComment extends HTMLElement {
-    isExpanded: boolean = false
+    isExpanded = false
     toggleButton!: HTMLButtonElement
     pElement!: HTMLParagraphElement
 
@@ -62,9 +62,11 @@ const { review } = Astro.props
         : `${comment.slice(0, maxLength)}${comment.length > maxLength ? "..." : ""}`
       this.pElement.textContent = truncatedComment
       this.toggleButton.textContent = isExpanded ? "Mostrar menos" : "Mostrar más"
-      comment.length > maxLength
-        ? (this.toggleButton.style.display = "inline")
-        : (this.toggleButton.style.display = "none")
+      if (comment.length > maxLength) {
+        this.toggleButton.style.display = "inline"
+      } else {
+        this.toggleButton.style.display = "none"
+      }
     }
 
     getMaxLength(comment: string, lineWidth: number, font: string) {
@@ -77,8 +79,7 @@ const { review } = Astro.props
       let currentLine = ""
       const words = comment.split(" ")
 
-      for (let i = 0; i < words.length; i++) {
-        const word = words[i]
+      for (const word of words) {
         const testLine = currentLine.trim() + (currentLine ? " " : "") + word
         const testWidth = context.measureText(testLine).width
 

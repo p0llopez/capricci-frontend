@@ -3,7 +3,7 @@
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, package-lock.json, yarn.lock, bun.lockb",
-    ".prettierrc.mjs": ".prettierignore",
+    "prettier.config.mjs": ".prettierignore",
     "README.md": "CONTRIBUTING.md"
   },
   "editor.linkedEditing": true,

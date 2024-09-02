@@ -41,10 +41,8 @@ export default function OrderDetail({ orderId }: Props) {
     event.preventDefault()
     const reviewTextElement = (event.target as HTMLFormElement).elements[1] as HTMLTextAreaElement
     createReview(selectedProductId, Number.parseInt(rating), reviewTextElement.value)
-      // eslint-disable-next-line no-alert
       .then(() => alert("Reseña creada correctamente"))
       .catch((error) => {
-        // eslint-disable-next-line no-alert
         alert(
           "Error al crear la reseña, es posible que ya hayas realizado una reseña a ese producto"
         )
