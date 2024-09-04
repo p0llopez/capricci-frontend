@@ -1,19 +1,11 @@
-import { yupResolver } from "@hookform/resolvers/yup"
-import { useState } from "preact/hooks"
-import { useForm } from "react-hook-form"
-import * as yup from "yup"
-
+import { handleLogin, handleRegister } from "@/components/Login/auth.service"
+import FormInput from "@/components/Login/form-input"
 import LoginFormButton from "@/components/Login/LoginFormButton"
-import { checkUserExists, loginUser, registerUser } from "@/lib/api/user"
-import { setTokens } from "@/stores/User"
-
-interface FormData {
-  email: string
-  password?: string
-  repeatedPassword?: string
-  name?: string
-  lastName?: string
-}
+import type { FormData } from "@/components/Login/types/form-data"
+import { baseSchema, loginSchema, registerSchema } from "@/components/Login/validation-schemas"
+import { checkUserExists } from "@/lib/api/user"
+import { useState } from "preact/hooks"
+import { z } from "zod"
 
 export default function LoginForm() {
   const [isNewUser, setIsNewUser] = useState<boolean | null>(null)
@@ -21,175 +13,76 @@ export default function LoginForm() {
   const [mainMessage, setMainMessage] = useState<string>(
     "Introduce tu e-mail. En caso de que no exista ninguna cuenta asociada a ese mail, empezará el proceso para crearla."
   )
-  const validationSchema = yup.object().shape({
-    email: yup.string().email("Debe ser un email válido").required("El email es obligatorio"),
-    password:
-      isNewUser === true
-        ? yup
-            .string()
-            .min(8, "La contraseña debe tener al menos 8 caracteres")
-            .max(20, "La contraseña debe tener como máximo 20 caracteres")
-            .matches(/^(?=.*[a-z]).+$/, "La contraseña debe tener al menos una letra minúscula")
-            .matches(/^(?=.*[A-Z]).+$/, "La contraseña debe tener al menos una letra mayúscula")
-            .matches(/^(?=.*\d).+$/, "La contraseña debe tener al menos un número")
-            .required("La contraseña es obligatoria")
-        : isNewUser === false
-          ? yup.string().required("La contraseña es obligatoria")
-          : yup.string(),
-    repeatedPassword:
-      isNewUser === true
-        ? yup
-            .string()
-            .oneOf([yup.ref("password"), undefined], "Las contraseñas no coinciden")
-            .required("Debes repetir la contraseña")
-        : yup.string(),
-    name:
-      isNewUser === true
-        ? yup
-            .string()
-            .matches(/^[\sA-Za-z]*$/, "El nombre solo puede contener letras")
-            .max(50, "El nombre no puede tener más de 50 caracteres")
-            .required("El nombre es obligatorio")
-        : yup.string(),
-    lastName:
-      isNewUser === true
-        ? yup
-            .string()
-            .matches(/^[\sA-Za-z]*$/, "Los apellidos solo pueden contener letras")
-            .max(100, "Los apellidos no pueden tener más de 100 caracteres")
-            .required("Los apellidos son obligatorios")
-        : yup.string(),
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    password: "",
+    repeatedPassword: "",
+    name: "",
+    lastName: "",
   })
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({})
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    clearErrors,
-  } = useForm<FormData>({
-    resolver: yupResolver<FormData>(validationSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      repeatedPassword: "",
-      name: "",
-      lastName: "",
-    },
-  })
+  const handleInputChange = (e: Event) => {
+    const { name, value } = e.target as HTMLInputElement
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: "" }))
+  }
 
-  async function handleLogin(data: FormData) {
+  const validateForm = () => {
     try {
-      while (true) {
-        const emailExists = await checkUserExists(data.email)
-        if (emailExists) break
-
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-      }
-
-      loginUser(data.email, data.password ?? "")
-        .then((response) => {
-          setTokens(response.access, response.refresh)
-          window.location.href = "/"
-        })
-        .catch(() => setError("password", { type: "manual", message: "Contraseña incorrecta" }))
+      const schema = isNewUser === null ? baseSchema : isNewUser ? registerSchema : loginSchema
+      schema.parse(formData)
+      setErrors({})
+      return true
     } catch (error) {
-      console.error("Error logging in user:", error)
+      if (error instanceof z.ZodError) {
+        const newErrors: Partial<Record<keyof FormData, string>> = {}
+        error.errors.forEach((err) => {
+          const path = err.path[0] as keyof FormData
+          newErrors[path] = err.message
+        })
+        setErrors(newErrors)
+      }
+      return false
     }
   }
 
-  const onSubmit = (data: FormData) => {
-    if (isNewUser === null) {
-      checkUserExists(data.email)
-        .then((emailExists) => {
-          if (emailExists) {
-            setIsNewUser(false)
-            setMainTitle("Bienvenido de nuevo")
-            setMainMessage("Introduce tu contraseña para iniciar sesión")
-            clearErrors()
-          } else {
-            setIsNewUser(true)
-            setMainTitle("¡Hola!")
-            setMainMessage("Introduce todos los datos para crear tu cuenta")
-            clearErrors()
-          }
-        })
-        .catch((error) => {
-          console.error("Error checking user:", error)
-          setError("email", { type: "manual", message: "Error al comprobar el email" })
-        })
-    } else if (isNewUser === true) {
-      checkUserExists(data.email)
-        .then((emailExists) => {
-          if (emailExists) {
-            setError("email", { type: "manual", message: "El email ya está en uso" })
-          } else {
-            registerUser(data.email, data.password ?? "", data.name ?? "", data.lastName ?? "")
-              .then(() => {
-                handleLogin(data).catch((error) => {
-                  console.error("Error logging in user:", error)
-                })
-              })
-              .catch((error) => {
-                console.error("Error creating user:", error)
-                setError("email", { type: "manual", message: "Error al crear el usuario" })
-              })
-          }
-        })
-        .catch((error) => {
-          console.error("Error checking user:", error)
-          setError("email", { type: "manual", message: "Error al comprobar el email" })
-        })
-    } else {
-      checkUserExists(data.email)
-        .then((emailExists) => {
-          if (!emailExists) {
-            setIsNewUser(false)
-            setError("email", {
-              type: "manual",
-              message: "No existe ninguna cuenta con este email, vuelve a intentarlo",
-            })
-          } else {
-            loginUser(data.email, data.password ?? "")
-              .then((response) => {
-                setTokens(response.access, response.refresh)
-                window.location.href = "/"
-              })
-              .catch((error) => {
-                console.error("Error logging in user:", error)
-                setError("email", { type: "manual", message: "Error al iniciar sesión" })
-              })
-          }
-        })
-        .catch((error) => {
-          console.error("Error checking user:", error)
-          setError("email", { type: "manual", message: "Error al comprobar el email" })
-        })
-    }
-  }
+  const onSubmit = async (e: Event) => {
+    e.preventDefault()
+    if (!validateForm()) return
 
-  const renderInput = (
-    label: string,
-    placeholder: string,
-    fieldName: keyof FormData,
-    tip?: string
-  ) => {
-    return (
-      <>
-        <div className="flex justify-between">
-          <label className="font-semibold text-bluegray">{label}</label>
-          {errors[fieldName]?.message && <p className="text-rouge">{errors[fieldName]?.message}</p>}
-        </div>
-        <input
-          {...register(fieldName)}
-          aria-invalid={errors[fieldName] ? "true" : "false"}
-          className={`w-full rounded-md border bg-beige px-4 py-2 outline-none ${errors[fieldName] ? "border border-rouge" : ""}`}
-          placeholder={placeholder}
-          type={fieldName === "password" || fieldName === "repeatedPassword" ? "password" : "text"}
-        />
-        {tip && <p className="text-sm text-gray-400">{tip}</p>}
-      </>
-    )
+    try {
+      const emailExists = await checkUserExists(formData.email)
+
+      if (isNewUser === null) {
+        if (emailExists) {
+          setIsNewUser(false)
+          setMainTitle("Bienvenido de nuevo")
+          setMainMessage("Introduce tu contraseña para iniciar sesión")
+        } else {
+          setIsNewUser(true)
+          setMainTitle("¡Hola!")
+          setMainMessage("Introduce todos los datos para crear tu cuenta")
+        }
+      } else if (isNewUser) {
+        if (emailExists) {
+          setErrors((prev) => ({ ...prev, email: "El email ya está en uso" }))
+        } else {
+          await handleRegister(formData)
+        }
+      } else {
+        if (!emailExists) {
+          setErrors((prev) => ({
+            ...prev,
+            email: "No existe ninguna cuenta con este email, vuelve a intentarlo",
+          }))
+        } else {
+          await handleLogin(formData)
+        }
+      }
+    } catch {
+      setErrors((prev) => ({ ...prev, email: "Error al comprobar el email" }))
+    }
   }
 
   return (
@@ -199,30 +92,64 @@ export default function LoginForm() {
         <p className=" text-gray-600">{mainMessage}</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="mb-7 flex flex-col gap-1">
-          {renderInput("Email", "email@example.com", "email", undefined)}
+          <FormInput
+            label="Email"
+            placeholder="email@example.com"
+            fieldName="email"
+            value={formData.email}
+            error={errors.email}
+            onChange={handleInputChange}
+          />
 
-          {isNewUser !== null &&
-            renderInput(
-              "Contraseña",
-              "Contraseña",
-              "password",
-              "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula y un número"
-            )}
+          {isNewUser !== null && (
+            <FormInput
+              label="Contraseña"
+              placeholder="Contraseña"
+              fieldName="password"
+              value={formData.password}
+              error={errors.password}
+              onChange={handleInputChange}
+              tip="La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula y un número"
+              type="password"
+            />
+          )}
 
           {isNewUser === true && (
             <>
-              {renderInput("Repite tu contraseña", "Contraseña", "repeatedPassword", undefined)}
-              {renderInput("Nombre", "Nombre", "name", undefined)}
-              {renderInput("Apellidos", "Apellidos", "lastName", undefined)}
+              <FormInput
+                label="Repite tu contraseña"
+                placeholder="Contraseña"
+                fieldName="repeatedPassword"
+                value={formData.repeatedPassword}
+                error={errors.repeatedPassword}
+                onChange={handleInputChange}
+                type="password"
+              />
+              <FormInput
+                label="Nombre"
+                placeholder="Nombre"
+                fieldName="name"
+                value={formData.name}
+                error={errors.name}
+                onChange={handleInputChange}
+              />
+              <FormInput
+                label="Apellidos"
+                placeholder="Apellidos"
+                fieldName="lastName"
+                value={formData.lastName}
+                error={errors.lastName}
+                onChange={handleInputChange}
+              />
             </>
           )}
         </div>
 
-        {isNewUser === null && LoginFormButton("Continuar")}
-        {isNewUser === false && LoginFormButton("Iniciar Sesión")}
-        {isNewUser === true && LoginFormButton("Crear Usuario")}
+        {isNewUser === null && <LoginFormButton buttonText="Continuar" />}
+        {isNewUser === false && <LoginFormButton buttonText="Iniciar Sesión" />}
+        {isNewUser === true && <LoginFormButton buttonText="Registrarse" />}
       </form>
     </div>
   )

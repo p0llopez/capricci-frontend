@@ -1,4 +1,8 @@
-export default function LoginFormButton(buttonText: string) {
+interface LoginFormButtonProps {
+  buttonText: string
+}
+
+export default function LoginFormButton({ buttonText }: LoginFormButtonProps) {
   return (
     <button
       type="submit"
