@@ -1,6 +1,3 @@
-import { useStore } from "@nanostores/preact"
-import { Big } from "big.js"
-
 import ProtectedRoute from "@/components/Protected/ProtectedRoute"
 import { getMyProfile } from "@/lib/api/profile"
 import { makePurchase } from "@/lib/api/purchase"
@@ -13,8 +10,11 @@ import {
   increaseItemQuantity,
   isCartOpen,
   removeCartItem,
-} from "@/stores/Cart"
-import { clearTokens, user } from "@/stores/User"
+} from "@/shared/stores/Cart"
+import { clearTokens, user } from "@/shared/stores/user.store"
+import { useStore } from "@nanostores/react"
+import { Big } from "big.js"
+import { type MouseEvent } from "react"
 
 export default function CartList() {
   const $isCartOpen = useStore(isCartOpen)
@@ -22,12 +22,12 @@ export default function CartList() {
   const $user = useStore(user)
   const totalAmount = getTotalAmount()
 
-  const handleDelete = (id: string) => (e: MouseEvent) => {
+  const handleDelete = (id: string) => (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     removeCartItem(id)
   }
 
-  const handleBuy = () => (e: MouseEvent) => {
+  const handleBuy = () => (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     verifyToken($user.accesToken)
       .then((isTokenValid) => {
@@ -90,12 +90,12 @@ export default function CartList() {
 
   return (
     <div className="absolute right-0 z-10 flex w-screen flex-col gap-4 bg-beige p-4 shadow-[0_15px_10px_0_rgba(0,0,0,0.5)] md:w-auto md:min-w-96 md:rounded-b-lg md:rounded-l-lg">
-      <ul className=" scrollbar-hide flex max-h-[calc(100vh-30rem)] flex-col gap-4 overflow-y-auto">
+      <ul className="scrollbar-hide flex max-h-[calc(100vh-30rem)] flex-col gap-4 overflow-y-auto">
         {Object.values($shoppingCartItems).map((item) => (
           <li key={item.id} className="rounded-lg border p-2 hover:border-bluegray">
             <a
               href={`/product/${item.id}`}
-              className=" flex h-full flex-1 flex-row items-center gap-4 text-xl"
+              className="flex h-full flex-1 flex-row items-center gap-4 text-xl"
             >
               <img src={item.imageSrc} alt={item.name} className="h-[70px]" />
               <div className="flex w-full flex-col gap-4">
@@ -109,7 +109,7 @@ export default function CartList() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="1.5"
-                      className=" size-6 transition hover:scale-105 hover:stroke-rouge"
+                      className="size-6 transition hover:scale-105 hover:stroke-rouge"
                       viewBox="0 0 24 24"
                     >
                       <path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
@@ -142,12 +142,12 @@ export default function CartList() {
 
       <hr />
 
-      <span className="flex justify-between text-bluegray-50 ">
+      <span className="flex justify-between text-bluegray-50">
         <p>Total productos</p>
         <p>{totalAmount} €</p>
       </span>
 
-      <span className="flex justify-between text-bluegray-50 ">
+      <span className="flex justify-between text-bluegray-50">
         <p>Gastos de envío</p>
         <p>{Number.parseInt(totalAmount) > 49 ? 0 : 2.99} €</p>
       </span>

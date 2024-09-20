@@ -1,7 +1,7 @@
-import { useStore } from "@nanostores/preact"
+import { useStore } from "@nanostores/react"
 
 import CardProduct from "@/components/Products/CardProduct"
-import { products } from "@/stores/Products"
+import { products } from "@/shared/stores/Products"
 
 export default function Products() {
   const $products = useStore(products)

@@ -1,7 +1,6 @@
 import { getProducts } from "@/lib/api/product"
-import { products } from "@/stores/Products"
-import type { ChangeEvent } from "preact/compat"
-import { useCallback, useEffect, useState } from "preact/hooks"
+import { products } from "@/shared/stores/Products"
+import { useCallback, useEffect, useState, type ChangeEvent } from "react"
 
 interface Props {
   className?: string

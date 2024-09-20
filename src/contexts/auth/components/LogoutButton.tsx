@@ -1,4 +1,4 @@
-import { clearTokens } from "@/stores/User"
+import { clearTokens } from "@/shared/stores/user.store"
 
 export default function LogoutButton() {
   const handleLogout = () => {

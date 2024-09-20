@@ -1,6 +1,6 @@
-import { useStore } from "@nanostores/preact"
+import { useStore } from "@nanostores/react"
 
-import { isCartOpen, totalCartItems } from "@/stores/Cart"
+import { isCartOpen, totalCartItems } from "@/shared/stores/Cart"
 
 export default function CartWidget() {
   const $isCartOpen = useStore(isCartOpen)
@@ -12,7 +12,7 @@ export default function CartWidget() {
       className={`relative flex flex-col items-center rounded-t-lg p-1 ${$isCartOpen && $totalCartItems > 0 ? "bg-beige" : "hover:scale-105"}`}
       onClick={() => isCartOpen.set(!$isCartOpen)}
     >
-      <span className=" flex">
+      <span className="flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

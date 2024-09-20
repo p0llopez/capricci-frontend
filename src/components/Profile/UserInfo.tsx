@@ -1,8 +1,8 @@
-import { useEffect, useState } from "preact/hooks"
+import { useEffect, useState } from "react"
 
 import { getMyProfile } from "@/lib/api/profile"
 import { refreshAccessToken, verifyToken } from "@/lib/api/user"
-import { clearTokens, getRefreshToken, setTokens } from "@/stores/User"
+import { clearTokens, getRefreshToken, setTokens } from "@/shared/stores/user.store"
 
 interface UserProfile {
   email: string

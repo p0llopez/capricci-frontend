@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/stores/User"
+import { getAccessToken } from "@/shared/stores/user.store"
 import type { BasicOrder, Order } from "@/types/Order"
 import type { Review } from "@/types/Review"
 

@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/stores/User"
+import { getAccessToken } from "@/shared/stores/user.store"
 import type { CartItem } from "@/types/CartItem"
 
 const API_BASE_URL = import.meta.env.PUBLIC_API_BASE_URL as string

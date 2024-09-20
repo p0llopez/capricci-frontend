@@ -6,10 +6,15 @@ It's a frontend for a shop made with Astro.
 
 ## 🚀 Table of Contents
 
-- [Commands](#-commands)
-- [Improvements](#-improvements)
-- [License](#-license)
-- [Acknowledgements](#-acknowledgements)
+- [Capricci Frontend](#capricci-frontend)
+  - [🚀 Table of Contents](#-table-of-contents)
+  - [🧞 Commands](#-commands)
+  - [📝 Improvements](#-improvements)
+    - [Design and UI/UX](#design-and-uiux)
+    - [Development and Performance](#development-and-performance)
+    - [DevOps and CI/CD](#devops-and-cicd)
+  - [📄 License](#-license)
+  - [📄 Acknowledgements](#-acknowledgements)
 
 ## 🧞 Commands
 
@@ -61,7 +66,7 @@ Here are some improvements that can be made:
 
 - [Astro](https://astro.build/)
 - [Tailwind](https://tailwindcss.com/)
-- [Preact](https://preactjs.com/)
+- [React](https://es.react.dev/)
 - [Nano Store](https://github.com/nanostores/nanostores)
 - [Big.js](https://github.com/MikeMcl/big.js)
 

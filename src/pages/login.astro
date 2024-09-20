@@ -1,8 +1,8 @@
 ---
-import LoginForm from "@/components/Login/LoginForm"
 import Layout from "@/layouts/Layout.astro"
+import AuthForm from "@contexts/auth/components/AuthForm"
 ---
 
 <Layout title="Login">
-  <LoginForm client:load />
+  <AuthForm client:load />
 </Layout>

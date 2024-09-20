@@ -1,11 +1,9 @@
 import { Big } from "big.js"
-import { useEffect, useState } from "preact/hooks"
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 
 import GoBackButton from "@/components/Profile/BackButton"
 import { createReview, getMyOrder } from "@/lib/api/profile"
 import type { Order } from "@/types/Order"
-import type { ChangeEvent } from "preact/compat"
-import type { JSX } from "preact/jsx-runtime"
 
 interface Props {
   orderId: string
@@ -39,7 +37,7 @@ export default function OrderDetail({ orderId }: Props) {
     toggleReviewPopUp()
   }
 
-  const handleReviewSubmit = (event: JSX.TargetedEvent<HTMLFormElement>) => {
+  const handleReviewSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const reviewTextElement = (event.target as HTMLFormElement).elements[1] as HTMLTextAreaElement
     createReview(selectedProductId, Number.parseInt(rating), reviewTextElement.value)

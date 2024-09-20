@@ -1,8 +1,8 @@
-import { useStore } from "@nanostores/preact"
-import { useEffect, useState } from "preact/hooks"
+import { useStore } from "@nanostores/react"
+import { useEffect, useState } from "react"
 
 import { refreshAccessToken, verifyToken } from "@/lib/api/user"
-import { clearTokens, setTokens, user } from "@/stores/User"
+import { clearTokens, setTokens, user } from "@/shared/stores/user.store"
 
 interface Props {
   authenticated: React.ReactNode

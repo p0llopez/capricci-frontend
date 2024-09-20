@@ -16,7 +16,7 @@ export default function ReviewCard(review: Review) {
   }
 
   return (
-    <div className="flex w-full flex-col items-center gap-4  rounded-lg border px-4 py-2 transition md:grid md:grid-cols-6">
+    <div className="flex w-full flex-col items-center gap-4 rounded-lg border px-4 py-2 transition md:grid md:grid-cols-6">
       <img src={review.product.image} alt={review.product.name} className="hidden h-24 md:block" />
       <p className="text-left text-lg">
         {review.product.name} ({format(new Date(review.created_at), "dd/MM/yyyy")})
@@ -36,7 +36,7 @@ export default function ReviewCard(review: Review) {
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.5"
-          className=" size-8 transition hover:scale-105 hover:stroke-rouge"
+          className="size-8 transition hover:scale-105 hover:stroke-rouge"
           viewBox="0 0 24 24"
         >
           <path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
